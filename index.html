@@ -1,0 +1,1057 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fff0fa"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Феечка"><meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>Феечка</title>
+<style>
+:root{--bg:#fff4fb;--panel:#ffffff;--line:#f0d2ee;--txt:#3b2a63;--dim:#7a6a9f;--am:#8a5cf0;--pink:#ff4fb0;--ice:#12a6c9;--form:#0e9f7b;--red:#e2455f;--yel:#c98600;--grn:#1fa876}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#fff0fa 0%,#f1ecff 50%,#e6fbff 100%) fixed;color:var(--txt);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:0 0 88px}
+main{max-width:640px;margin:0 auto;padding:16px}
+h1,h2,h3{margin:.2em 0 .5em;font-weight:700;letter-spacing:.02em}
+h1{font-size:1.35rem;text-transform:uppercase;background:linear-gradient(90deg,var(--pink),var(--am),var(--ice));-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-size:1.1rem;color:var(--am)}
+.mono{font-family:ui-monospace,"Cascadia Mono",Consolas,monospace;font-size:.85em;color:var(--dim);letter-spacing:.05em}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px;margin:0 0 14px;box-shadow:0 2px 12px #c9a8f01f}
+.neon{box-shadow:0 0 0 1px #ff4fb040,0 6px 24px #b48cff33}
+.quote{border-left:3px solid var(--am);padding:6px 10px;margin:10px 0;color:#4b3a78;font-style:italic;background:#faf5ff;border-radius:0 10px 10px 0}
+.quote b{font-style:normal;color:var(--am)}
+.quote.l{border-color:#19c3e6;background:#effbff}.quote.l b{color:#0e8fb0}
+label{display:block;margin:12px 0 4px;font-weight:600}
+.opt{font-style:italic;font-weight:300;font-size:.88em;color:#8a7aa8}
+input[type=text],input[type=number],textarea,select{width:100%;background:#fff;border:1px solid #e6c9ec;border-radius:12px;color:var(--txt);padding:10px;font:inherit}
+textarea{min-height:76px;resize:vertical}
+input[type=range]{width:100%;accent-color:var(--am)}
+.range{display:flex;gap:10px;align-items:center}.range output{min-width:2.2em;text-align:center;font-weight:700;color:var(--pink);font-size:1.2rem}
+.hint{font-size:.85rem;color:var(--dim);margin:2px 0}
+.chk{display:flex;gap:8px;align-items:flex-start;font-weight:400;margin:8px 0}
+.chk input{width:20px;height:20px;accent-color:var(--pink);flex:none}
+button{font:inherit;cursor:pointer;border-radius:14px;border:1px solid #e6c9ec;background:#fff;color:var(--txt);padding:12px 14px;min-height:44px}
+button.pri{background:linear-gradient(90deg,#8a5cf0,#ff4fb0);border:0;font-weight:700;width:100%;margin-top:14px;color:#fff;box-shadow:0 4px 14px #ff4fb055}
+button.ghost{background:none;color:var(--dim);border-color:transparent}
+button.sel{border-color:var(--pink);color:var(--pink);font-weight:700;background:#fff0f9}
+button.danger{border-color:var(--red);color:var(--red);background:#fff}
+button.sos{width:100%;margin:0 0 14px;border-color:var(--pink);background:#fff0f9;font-weight:700;color:#c92c8a}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--ice);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.row>button{flex:1}
+.task{display:flex;align-items:center;gap:6px;margin:0 0 8px}
+.task .ti{font-size:1.35rem;width:1.8rem;text-align:center;flex:none}
+.task .n{flex:1;min-width:0;overflow-wrap:anywhere}.task .c{font-size:.8rem;color:var(--dim)}
+.task .sb{flex:none;width:44px;padding:0;font-size:1.05rem}
+.blu{color:#0e8fb0}.grn{color:var(--grn)}.yel{color:var(--yel)}.red{color:var(--red)}
+.top{display:flex;gap:14px;align-items:center}
+.jar{width:110px;flex:none}
+.bar{height:8px;background:#f1e6fb;border-radius:8px;overflow:hidden;margin:6px 0}.bar i{display:block;height:100%;background:linear-gradient(90deg,#19c3e6,#8a5cf0,#ff4fb0)}
+.month{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;margin-top:8px}
+.month span{aspect-ratio:1;border-radius:8px;border:1px solid var(--line);display:grid;place-items:center;font-size:.7rem;color:var(--dim);background:#fff}
+.month .on{background:#8a5cf022;border-color:var(--am);color:var(--txt)}.month .now{outline:2px solid var(--pink)}
+.spark{display:flex;align-items:flex-end;gap:3px;height:70px;margin-top:8px}
+.spark i{flex:1;min-height:2px;border-radius:3px 3px 0 0;background:linear-gradient(0deg,var(--am),var(--pink))}
+.spark i.z{background:var(--line)}
+.wk{display:flex;gap:6px;align-items:flex-end;height:96px;margin:8px 0 4px}
+.wc{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;font-size:.7rem;color:var(--dim)}
+.wc i{display:block;width:70%;background:linear-gradient(0deg,var(--am),var(--pink));border-radius:5px 5px 0 0;min-height:3px}
+.wc i.z{background:var(--line)}.wc .v{font-weight:700;color:var(--txt)}
+.heat td,.heat th{text-align:center;padding:6px 2px}.heat td:first-child,.heat th:first-child{text-align:left}
+.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+.badge{border:1px dashed #dcc1e6;border-radius:12px;padding:8px;font-size:.85rem;color:#a08fbe;background:#fffafd}
+.badge.on{border:1px solid #19c3a0;color:var(--txt);background:#e8fbf5}
+.badge b{display:block}
+.chips{display:flex;flex-wrap:wrap;gap:6px}.chip{background:#fff7fd;border:1px solid var(--line);border-radius:999px;padding:4px 10px;font-size:.85rem}
+.emo{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;margin-top:6px}
+.emo button{font-size:1.3rem;padding:0;min-height:44px}.emo button.on{border-color:var(--pink);background:#fff0f9}
+table{width:100%;border-collapse:collapse;font-size:.85rem}
+th,td{border-bottom:1px solid var(--line);padding:7px 4px;text-align:left;vertical-align:top}
+th{color:var(--dim);font-weight:600}
+.x{background:none;border:0;color:var(--dim);padding:0 8px;min-height:44px;width:auto;flex:none;font-size:1.1rem;box-shadow:none}
+.rowl{display:flex;justify-content:space-between;align-items:center;gap:8px;border-bottom:1px solid var(--line);padding:6px 0}
+.hl{display:flex;gap:8px;align-items:flex-start;padding:5px 0;border-bottom:1px solid #f0d2ee88}
+.hl .e{font-size:1.2rem;flex:none;width:1.6rem;text-align:center}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.stats div{background:#faf3ff;border-radius:12px;padding:8px;font-size:.85rem}.stats b{display:block;font-size:1.25rem;color:var(--form)}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:#ffffffee;border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);backdrop-filter:blur(6px)}
+nav button{flex:1;border:0;border-radius:0;background:none;color:var(--dim);font-size:.72rem;padding:8px 2px}
+nav button[aria-current=true]{color:var(--pink);font-weight:700}
+nav button span{display:block;font-size:1.25rem}
+#mission{position:fixed;inset:0;background:linear-gradient(180deg,#fff0fa 0%,#f1ecff 55%,#e6fbff 100%);overflow:auto;z-index:5}
+#mission[hidden],#modal[hidden]{display:none}
+#modal{position:fixed;inset:0;background:#3b2a6380;z-index:20;display:grid;place-items:center;padding:16px}
+.mbox{background:#fff;border:1px solid var(--am);border-radius:18px;padding:18px;max-width:440px;width:100%;max-height:88vh;overflow:auto;box-shadow:0 10px 40px #8a5cf055}
+.bigxp{font:700 2.4rem ui-monospace,Consolas,monospace;text-align:center;color:var(--form);margin:6px 0}
+.timer{font:700 3rem ui-monospace,Consolas,monospace;text-align:center;color:var(--form);text-shadow:0 0 18px #19c3a044;margin:18px 0}
+.first{font-size:1.15rem;padding:14px;border-radius:14px;background:#fff0f9;border:1px solid #ff4fb066}
+#toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:#fff;color:var(--txt);border:1px solid var(--am);border-radius:14px;padding:10px 14px;max-width:90vw;z-index:30;opacity:0;transition:opacity .3s;pointer-events:none;box-shadow:0 6px 24px #8a5cf044}
+#toast.on{opacity:1;pointer-events:auto}
+.warn{background:#ffe9ee;border:1px solid var(--red);border-radius:12px;padding:10px;margin-bottom:14px;font-size:.9rem}
+.goal{display:flex;gap:8px;align-items:center;margin:6px 0}.goal.ok{color:var(--form);font-weight:600}
+@keyframes float{50%{transform:translateY(-3px)}}.shark{animation:float 4s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.shark{animation:none}}
+
+.gems{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
+.gemc{border:1px solid var(--line);border-radius:14px;padding:8px 4px;background:#fffafd;position:relative}
+.gem{width:56px;height:66px}
+.gemc.lit{border-color:var(--c);box-shadow:0 0 16px var(--c)}
+.gemc.lit .gem{animation:shine 2.2s ease-in-out infinite}
+@keyframes shine{0%,100%{filter:drop-shadow(0 0 2px var(--c))}50%{filter:drop-shadow(0 0 10px var(--c))}}
+.gemc .gn{font-size:.8rem;font-weight:700}.gemc .gs{font-size:.75rem;color:var(--dim)}
+.gemc button{min-height:34px;padding:2px 6px;font-size:.78rem;margin-top:4px}
+.celeb{position:relative;height:190px;display:grid;place-items:center;overflow:hidden;margin:6px 0;border-radius:16px;background:radial-gradient(circle at 50% 55%,#fff 0,var(--bgc,#f6efff) 100%)}
+.celeb .gem{width:96px;height:112px;position:relative;z-index:2;animation:pop .9s cubic-bezier(.2,1.6,.4,1) both}
+.celeb .gem.ding{animation:ding .8s ease-in-out both}
+.celeb .em{font-size:76px;position:relative;z-index:2;animation:pop .9s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes pop{0%{transform:scale(.6) rotate(-8deg)}60%{transform:scale(1.18) rotate(4deg)}100%{transform:scale(1) rotate(0)}}
+@keyframes ding{0%,100%{transform:rotate(0)}15%{transform:rotate(-9deg)}35%{transform:rotate(8deg)}55%{transform:rotate(-5deg)}75%{transform:rotate(3deg)}}
+.fillr{transform-box:fill-box;transform-origin:50% 100%;animation:rise 1.3s ease-out .2s both}
+@keyframes rise{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.ring{position:absolute;left:50%;top:50%;width:60px;height:60px;margin:-30px 0 0 -30px;border-radius:50%;border:3px solid var(--c);opacity:0;animation:ringx 1.6s ease-out 1.1s infinite}
+.ring.r2{animation-delay:1.7s}
+@keyframes ringx{0%{transform:scale(.6);opacity:.9}100%{transform:scale(3.4);opacity:0}}
+.en{position:absolute;bottom:14px;width:8px;height:8px;border-radius:50%;background:var(--c);opacity:0;animation:up 2.2s ease-in infinite;box-shadow:0 0 8px var(--c)}
+@keyframes up{0%{transform:translateY(0) scale(.6);opacity:0}20%{opacity:1}100%{transform:translateY(-150px) scale(1.2);opacity:0}}
+.twk{position:absolute;color:var(--c);font-size:1.3rem;opacity:0;animation:tw 1.8s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:0;transform:scale(.4)}50%{opacity:1;transform:scale(1.2) rotate(20deg)}}
+@media (prefers-reduced-motion:reduce){.celeb *,.gemc.lit .gem,.pulse,.gb .gi{animation:none!important}.fillr{transform:none}}
+.cat.dn{border:2px solid #2ecc71;background:linear-gradient(180deg,#f0fff6,#fff);box-shadow:0 0 14px #2ecc7144}
+.catH{display:flex;align-items:center;gap:8px;width:100%;background:none;border:0;padding:4px 0;min-height:40px;text-align:left}
+.catH h2{margin:0;flex:1}.catH .ar{color:var(--dim)}
+.dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:4px;vertical-align:middle}
+.pulse{animation:pls 2.2s ease-in-out infinite;border:2px solid var(--pink)}
+@keyframes pls{0%,100%{box-shadow:0 0 0 0 #ff4fb055}50%{box-shadow:0 0 0 7px #ff4fb000}}
+.month .fog{filter:blur(1.5px);opacity:.45;background:linear-gradient(135deg,#e9ddff,#dff6ff)}
+.month .hid{opacity:.35;border-style:dashed}
+.lock{opacity:.6}
+.dh{touch-action:none;cursor:grab;font-size:1.2rem;color:var(--dim);flex:none;width:36px;min-height:44px;display:grid;place-items:center;user-select:none}
+.dragging{opacity:.6;position:relative;z-index:5}.dropb{box-shadow:0 -3px 0 0 var(--pink)}
+.chart{width:100%;height:auto}
+.lg{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}.lg button{padding:4px 10px;min-height:32px;font-size:.8rem;border-radius:999px}
+.hm td{text-align:center;padding:6px 2px}.hm td:first-child{text-align:left}
+.emb{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.emb button{padding:6px 2px;font-size:.78rem;min-height:56px}.emb button.on{border-color:var(--pink);background:#fff0f9}
+.adv{border-left:3px solid var(--ice);padding:6px 10px;margin:8px 0;background:#effbff;border-radius:0 10px 10px 0}
+.dots{display:flex;gap:6px;justify-content:center;margin:6px 0 12px}.dots i{width:10px;height:10px;border-radius:50%;background:var(--line)}.dots i.on{background:var(--pink)}.dots i.dn{background:var(--am)}
+.big{font-size:1.15rem}
+.node{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px dashed var(--line)}.node .nic{font-size:1.2rem;width:1.6rem;text-align:center}
+.node.lk{opacity:.55}.node.cur{background:#fff0f9;border-radius:12px;padding:8px;border:1px solid var(--pink)}
+.gb{display:flex;gap:10px;align-items:center;margin-top:10px;padding:10px;border-radius:14px;background:linear-gradient(90deg,#f1ecff,#ffe9f6);border:1px solid var(--am)}
+.gb .gi{font-size:2.2rem;animation:pop 2.4s ease-in-out infinite}
+.bar.bg2{height:14px;border-radius:10px}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<div id="mission" hidden><main id="mbody"></main></div>
+<div id="modal" hidden><div class="mbox" id="mcont"></div></div>
+<nav>
+  <button data-tab="dossier"><span>🧚</span>Главная</button>
+  <button data-tab="tasks"><span>📋</span>Задания</button>
+  <button data-tab="journal"><span>🗂️</span>Журнал</button>
+  <button data-tab="final"><span>🌙</span>Финал</button>
+  <button data-tab="more"><span>⚙️</span>Ещё</button>
+</nav>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+window.__timeOff=()=>0;window.__timeShift=()=>0;
+const D={"L": {"full": [["t", "Задача выполнена. Результат записан."], ["t", "Выполнено. Не идеально, но завершено — это ценнее незавершённого идеала."], ["t", "Успех. Статус обновлён."], ["t", "Процесс завершён. Можно переходить к отдыху."], ["t", "Результат зафиксирован. Хорошая работа."], ["t", "Задача закрыта, ресурсы освобождены."], ["m", "Получилось! Я так за тебя рада!"], ["m", "Дело закрыто — и ты можешь собой гордиться."], ["m", "Красиво! Запомни это ощущение, оно твоё."]], "ad_hind": [["t", "Одна помеха повторяется чаще остальных."], ["m", "Эта помеха приходит снова и снова. Может, придумаем для неё чары решимости?"]], "ad_sleep": [["t", "Сон ниже 5 баллов несколько дней подряд. Это стоит обсудить с психологом, а не исправлять в одиночку."], ["m", "Похоже, тебе не хватает отдыха. Расскажи об этом психологу."]], "rankup": [["t", "Звание повышено. Статус обновлён."], ["t", "Заметный прогресс. Отмечено в профиле."], ["t", "Следующий уровень уже доступен."], ["m", "Новое звание! Ты растёшь."]], "start": [["t", "Не нужно ждать, пока появится желание. Запуск процесса не зависит от настроения."], ["t", "Разбей задачу на шаги. Первый шаг — самый маленький."], ["t", "Начни с минимальной версии. Улучшать будешь потом."], ["t", "Первый шаг — это запуск. Остальное выполнится по ходу."], ["t", "Не пытайся предсказать результат. Просто запусти и посмотри, что получится."], ["m", "Начало — самое трудное. Но ты уже здесь, и это уже шаг."], ["m", "Не думай, как всё получится. Сделай один маленький жест."], ["m", "Включи что-нибудь, что любишь, и начни с первого движения."]], "full_quick": [["t", "Время выполнения минимальное. Эффективно."], ["t", "Быстро и без ошибок."], ["m", "Пара минут — и дело сделано. Вот это темп!"]], "dossier_d4": [["t", "Последняя неделя: оптимизация. Не ускоряйся, держи ритм."], ["t", "Месяц почти завершён. Остаётся закрепить результат."]], "unlock_feat": [["t", "Полный функционал открыт: «Засечь момент», советы, тепловая карта."], ["m", "Открылись новые возможности. Заглядывай в «Журнал»."]], "start_hard": [["t", "Задача объёмная. Разделим на подзадачи и начнём с первой."], ["t", "Сложное — это просто много простого. Выбери первый кусок."], ["t", "Большие задачи нельзя выполнить одним действием. Нужно начать с одного шага."], ["m", "Дело тяжёлое, и это честно. Возьми только первый кусочек."]], "dossier_d3": [["t", "Третья неделя: накоплено достаточно данных. Посмотри, что работает лучше всего."], ["t", "Можно добавить свои задачи: система готова."]], "time_fix": [["t", "Запись длиннее обычного. Возможно, таймер не остановили."], ["m", "Кажется, таймер шёл слишком долго. Давай поправим время."]], "tasks_day": [["t", "Ресурсы в норме. Выбери одну задачу и запусти её."], ["t", "Не обязательно оптимизировать всё сразу. Одна задача — уже прогресс."], ["t", "Любое выполненное дело учитывается. Даже самое короткое."], ["m", "День в разгаре. Выбери одно дело, которое отзывается, и просто начни."], ["m", "Не жди идеального настроения. Оно приходит уже по ходу дела."]], "final": [["t", "Итоговый отчёт. Заполни точно: мне нужны данные, а не красота."], ["t", "Анализ результатов начинается с честных ответов."], ["t", "Правильных ответов нет. Есть точные."], ["t", "Заполни не спеша. Спешка вносит ошибки."], ["m", "Заполни честно: твои слова важны, а не красота ответов."], ["m", "Это не экзамен, а твой рассказ о том, как всё было."]], "ad_rest_do": [["t", "День помечен как плохой, но дело выполнено. Нагрузка была повышенной."], ["m", "В тяжёлый день ты всё равно сделала шаг. Это ценно."]], "run": [["t", "Процесс идёт. Показатели в норме."], ["t", "Отвлеклась? Это сбой внимания, не критичный. Возвращайся к задаче."], ["t", "Скорость стабильная. Продолжай в том же режиме."], ["t", "Нужна пауза — сделай. Перегрев системы хуже короткой остановки."], ["t", "Каждое действие — ещё один шаг к завершению."], ["t", "Самая сложная часть — запуск — уже выполнена."], ["m", "Ты уже в деле. Продолжай, я рядом."], ["m", "Идёшь ровно — и этого достаточно. Не торопись."], ["m", "Отвлеклась? Это бывает. Вернуться тоже умение."]], "tasks_evening": [["t", "Заряд к вечеру снижается — это штатно. Выбирай задачу по остаточной энергии."], ["t", "Вечерний режим: низкая нагрузка, высокая аккуратность."], ["t", "Мало сил? Запусти самое лёгкое. Оно тоже в зачёте."], ["m", "Вечер — мягкое время. Одно небольшое дело, и можно выдохнуть."], ["m", "Силы к вечеру убывают, это нормально. Выбери самое лёгкое."]], "crystal_ding": [["t", "Ещё одно дело из этой категории. Кристалл откликается."], ["m", "Звенит ещё громче! Так держать."]], "sos": [["t", "Не получается запустить? Такое бывает. Давай минимальный шаг."], ["t", "Две минуты, одно действие. Остальное решишь сама."], ["t", "Остановись. Определи самое маленькое действие, которое можно выполнить сейчас."], ["t", "Не думай о всей задаче. Думай только о ближайших двух минутах."], ["m", "Не получается начать? Ничего страшного. Выбери самый маленький шаг."], ["m", "Выдохни. Тебе не обязательно хотеть, достаточно попробовать."]], "moment_intro": [["t", "Фиксация момента. Чем точнее запись, тем полезнее анализ прокрастинации."], ["m", "Заметить момент уже большое дело. Расскажи, что было."]], "ad_back_do": [["t", "Дело выполнено в день возвращения. Это самый трудный шаг."], ["m", "Сразу в деле после паузы! Вот это возвращение."]], "sos_go": [["t", "Ноль. Дело начато. Таймер идёт вверх."], ["m", "Всё, ты уже в деле! Дальше только идти."]], "dossier_d1": [["t", "Первая неделя: калибровка. Главное — регулярно заходить."], ["t", "Не нужны идеальные результаты. Нужны данные."]], "sosyes": [["t", "Процесс запущен. Дальше проще."], ["t", "Старт выполнен. Самое сложное позади."], ["t", "Хорошо. Продолжай, пока идёт."], ["m", "Вот и началось! Самое трудное позади."]], "full_long": [["t", "Длительный процесс завершён. Рекомендую воду и паузу."], ["t", "Ты потратила много времени и ресурсов. Заслуженный отдых."], ["m", "Ты так долго держалась! Выпей воды и отдохни. Силы нужно беречь."]], "full_easy": [["t", "Небольшая задача, но в журнале она учтена."], ["t", "Простые задачи складываются в большую статистику."], ["t", "Лёгкий результат — тоже результат."], ["m", "Лёгкая победа тоже победа. Из них складывается ритм."]], "streak": [["t", "Несколько дней подряд — устойчивый паттерн."], ["t", "Серия идёт. Если прервётся — это просто пауза."], ["t", "Повторение формирует привычку."], ["m", "Несколько дней подряд! Ритм становится твоим."]], "unlock_week": [["t", "Тестовая неделя пройдена. Доступ ко всему эксперименту в 30 дней открыт."], ["m", "Ты прошла тестовую неделю! Теперь вся карта твоя."]], "ad_nocrystal": [["t", "Не все кристаллы получили категорию. Назначь её на главной или в «Ещё»."], ["m", "Этот кристалл ещё ждёт свою категорию. Давай назначим!"]], "dir_unlock": [["t", "Чары решимости доступны. Это награда за наблюдательность."], ["m", "Ты заслужила Чары решимости! Самое время выбрать своё заклинание."]], "daily_nosleep": [["t", "Сна не было. Зафиксировано отдельно, в среднее значение не входит."], ["m", "Тяжело, когда не спится. Позаботься о себе сегодня."]], "dossier_d5": [["t", "Срок истёк, но система работает дальше. Продолжай в своём режиме."], ["t", "Всё, что сделано после срока, — дополнительный результат."]], "ad_dip": [["t", "Активность на этой неделе ниже обычной. Возможно, мешает что-то конкретное."], ["m", "Бывает тихая неделя. Давай посмотрим, что её тянуло вниз."]], "ad_back_long": [["t", "Перерыв более недели. Предлагаю не наверстывать, а начать с одного небольшого дела."], ["m", "Ты вернулась, и это самое важное. Давай выберем самое лёгкое дело."]], "ad_back_short": [["t", "Пауза: несколько дней. Данные сохранены, можно продолжать с любого места."], ["m", "С возвращением! Ничего страшного не случилось, начнём с малого."]], "level_up": [["t", "Новый уровень засечки. Открыты дополнительные вопросы."], ["m", "Ты растёшь! Замечать себя получается всё лучше."]], "tasks_night": [["t", "Уже ночь. Рекомендую перейти в режим сна: остальное подождёт."], ["t", "Ночью эффективность падает. Одна короткая задача — и отбой."], ["t", "Сон — обязательное обновление. Остальное завтра."], ["m", "Уже поздно. Если дело подождёт — пусть ждёт. Сон тоже часть магии."], ["m", "Ночью лучше беречь силы. Только если очень коротко."]], "start_study": [["t", "Открой материалы. Сначала просто загрузи информацию, анализ потом."], ["t", "Учёба — это обработка данных частями. Начни с первой части."], ["t", "Не нужно понимать всё сразу. Первая страница — достаточный старт."], ["m", "Учёба. Открой тетрадь — этого достаточно, чтобы двигаться дальше."]], "cap": [["t", "Дневной лимит достигнут. Остальные задачи дадут минимум опыта: отдохни."], ["t", "Перегрузка снижает эффективность."], ["t", "Лимит — защита системы, а не наказание."], ["m", "Сегодня ты потратила много сил. Завтрашней тебе они тоже понадобятся."]], "daily_intro": [["t", "Короткая отметка, десять секунд. Данные нужны, чтобы советы были точными."], ["m", "Всего пара движений ползунком, и день станет понятнее."]], "sosfail": [["t", "Запуск не удался. Это не ошибка, а информация для следующей попытки."], ["t", "Попытка зафиксирована. Это данные, а не провал."], ["t", "Иногда системе нужна перезагрузка. Завтра повторишь."], ["m", "Не вышло — это данные, не вина. Вернёмся позже."]], "crystal_spark": [["t", "Кристалл активирован: дело из его категории выполнено."], ["m", "Кристалл засиял! Слышишь, как он звенит?"]], "ach": [["t", "Достижение разблокировано."], ["t", "Новая отметка в архиве."], ["t", "Значки — приятный бонус, но главное — сами задачи."], ["m", "Ещё одна звёздочка в коллекции!"]], "full_study": [["t", "Учебная задача закрыта. Данные обработаны."], ["t", "Знания накапливаются шагами. Ещё один сделан."], ["t", "Объём материала уменьшился. Хорошо."], ["m", "Страница за страницей — и знания твои."]], "gap": [["t", "С возвращением. Пауза не удалила данные, всё сохранено."], ["t", "Давно не заходила. Можно продолжить с любой точки."], ["t", "Перерыв допустим. Прогресс не обнуляется."], ["m", "Ты вернулась! Это самое важное."], ["m", "Перерыв не обнуляет прогресс. Он сохранён."]], "moment_saved": [["t", "Момент записан. Это данные, а не оценка."], ["m", "Спасибо, что заметила и записала. Это правда непросто."]], "ad_steady": [["t", "Стабильность высокая. Нагрузка в пределах нормы."], ["m", "Ритм звучит ровно, и это красиво!"]], "full_hyg": [["t", "Обслуживание проведено. Системе спокойнее."], ["t", "Это важная процедура, и она выполнена."], ["t", "Состояние улучшено. Запишем."], ["m", "Позаботилась о себе. Это здорово."]], "dir_confirm": [["t", "Чары решимости фиксируются. Изменить их нельзя до окончания срока."], ["m", "Это заклинание-обещание самой себе. Эта формулировка тебе точно подходит?"]], "full_hard": [["t", "Сложная задача выполнена. Это требует восстановления: отдохни."], ["t", "Объёмный процесс завершён успешно. Отличный результат."], ["t", "Высокая нагрузка — и ты справилась. Запишем отдельно."], ["m", "Это было непросто — и ты справилась. Подари себе паузу."]], "dir_cancel": [["t", "Чары отменены как ошибочные. Пауза не включена."], ["m", "Ничего страшного, бывает. Сформулируем заклинание заново."]], "sos_prep": [["t", "Обратный отсчёт запущен. Две минуты на подготовку: найди место, достань всё нужное."], ["m", "Две минуты, чтобы собраться. Вдох, плечи вниз, и мы начинаем."], ["t", "Готовься к началу дела. Через две минуты таймер перейдёт в рабочий режим."]], "dossier_d2": [["t", "Вторая неделя: привычка ещё в разработке. Дай ей время."], ["t", "Стабильность важнее скорости."]], "tasks_morning": [["t", "Система запущена. Первый процесс дня — любое небольшое дело."], ["t", "Утром загрузка минимальная. Хорошее время для одного лёгкого дела."], ["t", "Режим «утро» включён. Начни с одной задачи, остальное подгрузится само."], ["m", "Утро звучит тихо и чисто. Одно маленькое дело — и день уже в твоём ритме."], ["m", "Доброе утро! Не нужно всё сразу. Выбери то, к чему тянется рука."]], "start_easy": [["t", "Лёгкая задача. Выполнится за пару минут."], ["t", "Минимальная нагрузка. Запускай."], ["t", "Простое дело — хорошая проверка: система работает."], ["m", "Лёгкое дело — отличная разминка. Сделаешь быстро!"]], "rest": [["t", "Плохой день: режим энергосбережения. Отдыхай."], ["t", "Сегодня задач нет. Восстановление — тоже процесс."], ["t", "Перезагрузка системы займёт ночь. Завтра будет новая сессия."], ["m", "Плохой день — тоже день. Отдыхай, это не слабость."], ["m", "Ты отметила плохой день — это забота о себе."]], "start_hyg": [["t", "Гигиена — это обслуживание системы. Регулярность важнее длительности."], ["t", "Первый шаг — дойти до места. Остальное — стандартная процедура."], ["t", "Поставь трек, чтобы время шло быстрее. Процедура короткая."], ["m", "Забота о себе — тоже дело. Сделай её приятной."]], "part": [["t", "Задача выполнена частично. Данные сохранены, остальное можно продолжить позже."], ["t", "Остановка — тоже допустимое решение. Статус: приостановлено."], ["t", "Половина — это уже больше нуля. Запишем."], ["t", "Незавершённое не удаляется, оно ждёт продолжения."], ["m", "Часть тоже считается. Остальное подождёт."], ["m", "Половина пути — всё равно путь."]]}, "BRIEF": {"1": [["m", "Первая неделя: пробуем. Приходи и смотри, как всё устроено."], ["t", "Первая неделя: калибровка. Нужны не идеальные результаты, а регулярные данные."]], "2": [["m", "Вторая неделя: втягиваемся. Закрепляй то, что получилось."], ["t", "Вторая неделя: стабилизация. Повторяй рабочие шаги."]], "3": [["m", "Третья неделя: смотрим, что идёт легче всего, и добавляем своё."], ["t", "Третья неделя: анализ. Журнал уже показывает, что работает."]], "4": [["m", "Четвёртая неделя: финишная прямая. Держи свой темп."], ["t", "Четвёртая неделя: итоговая. Осталось не снижать скорость."]], "5": [["m", "Сезон завершён! Осталась итоговая запись."], ["t", "Срок вышел. Система ждёт итоговую запись."]]}, "ENDS": {"0": ["Сезон продлён", [["t", "Срок сезона истёк, порог опыта не набран. Это допустимый исход."], ["m", "Это не провал, а продолжение. Отсюда и стартуем."], ["t", "Сезон продлён. Все записи сохранены."]]], "1": ["Сезон закрыт", [["t", "Порог пройден. Сезон закрыт успешно."], ["m", "Сосуд полон! Мы это сделали — точнее, ты сделала."], ["t", "Результат подтверждён данными: дела выполнены, опыт набран."], ["m", "Знаешь, что круче всего? Ты наполнила его сама."], ["t", "Дальнейшие действия — на твоё усмотрение."]]], "2": ["Доступ расширен", [["t", "Сезон закрыт, и шире, чем требовалось: ты работала в разных направлениях."], ["m", "Смотри, что в твоём списке: {cats}. Столько всего за один сезон!"], ["t", "Доступ расширен: теперь ты сама решаешь, где и когда работать."], ["m", "Я же говорила, что получится!"], ["t", "Отметка в профиле: «Умеет распределять ресурсы»."]]], "3": ["Свой сезон", [["t", "Сезон закрыт, доступ расширен. И ещё: ты делала это регулярно."], ["m", "Не меньше половины месяца в деле — это не случайность."], ["t", "Такой режим не требует контроля. Расписание теперь составляешь ты."], ["m", "Так что мы с Текной почти без работы! Пойду порепетирую."], ["t", "Феечка передаётся тебе. Продолжай по своему алгоритму."]]]}};
+const LINES=D.L,BRIEF=D.BRIEF,ENDS=D.ENDS;
+const TEST=false;
+const LV=[null,
+ {n:'Искорка',h:'мелочь, почти без усилий',xp:5,c:'blu',e:'✨'},
+ {n:'Заклинание',h:'обычное дело',xp:15,c:'grn',e:'🔮'},
+ {n:'Трансформация',h:'большое дело, нужны силы',xp:35,c:'red',e:'🦋'}];
+const GOAL=450,QDAYS=30,NEED_CATS=3,NEED_DAYS=15,DAYCAP=100,OVERRATE=0.1;
+
+const CRY=[{n:'Розовый кристалл',c:'#ff4fb0',bg:'#ffe9f6'},{n:'Голубой кристалл',c:'#12a6c9',bg:'#e6f8fd'},{n:'Золотой кристалл',c:'#f0a020',bg:'#fff4de'}];
+const FULL_AT=5,DIR_H=48,DIR_CD_H=12,DIR_UNDO_MIN=15,LONG_MIN=180,DIR_AT=6;
+const MLV=[
+ {n:'Искорка внимания',at:0,ic:'✨',q:['task','emo'],open:'Два вопроса: какое дело и что ты чувствуешь.'},
+ {n:'Следопыт',at:3,ic:'🌿',q:['when','task','hind','emo'],open:'Добавятся вопросы «когда это было» и «что помешало».'},
+ {n:'Хранительница тайн',at:6,ic:'📚',q:['when','task','hind','doing','emo'],open:'Добавится вопрос «чем ты занималась» и откроются Чары решимости 🎁'},
+ {n:'Мастер момента',at:9,ic:'🌟',q:['when','task','hind','doing','emo','int'],open:'Добавится вопрос «насколько сильно».'}];
+const BUCKETS=['Утро','День','Вечер','Ночь'];
+const bucketOf=ts=>{const h=new Date(ts).getHours();return h>=5&&h<11?0:h>=11&&h<17?1:h>=17&&h<23?2:3};
+const EMOS=[['😤','раздражение'],['😰','тревога'],['😩','усталость'],['🥱','скука'],['😔','грусть'],['😳','стыд'],['😶','пустота'],['🤷','не знаю']];
+const DOING=['листала телефон','смотрела видео','играла','переписывалась','лежала и «зависала»','делала другое дело','думала об этом','ела или пила чай'];
+const DEF_HIND=['Поломка / засор / что-то непредвиденное','Пришлось переключиться на другое дело','Отвлеклась на телефон','Кончились силы'];
+const WHENS=[['0','Прямо сейчас'],['15','Минут 15 назад'],['60','Около часа назад'],['180','Пару-тройку часов назад'],['m','Сегодня утром'],['y','Вчера']];
+const RANKS=[[0,'Новичок Алфеи'],[70,'Ученица Алфеи'],[180,'Фея-практикантка'],[315,'Старшая фея'],[450,'Фея Клуба Винкс']];
+const INTR=['Поломка / засор / что-то непредвиденное','Пришлось переключиться на другое дело','Отвлеклась на телефон','Кончились силы','Другое'];
+const DEF_CATS=[{id:'home',name:'Быт',icon:'🏠'},{id:'hyg',name:'Гигиена',icon:'🚿'},{id:'study',name:'Учёба',icon:'📚'},{id:'own',name:'Своё',icon:'⭐'}];
+const OLDT={cook:['Приготовить еды',2,'поставить воду на огонь'],dish:['Помыть посуду',1,'вымыть одну чашку'],closet:['Разобрать вещи в шкафах',3,'открыть одну полку и вынуть три вещи']};
+const EMO=['🏠','🧹','🧽','🍽️','🍳','🧺','🛁','🚿','🪥','🧼','📚','✏️','💻','🎧','🎮','🎨','✍️','🛒','🐈','🌱','🚶','🏃','💪','🧘','😴','💊','📞','✉️','💰','🗂️','🧴','🪟','🗑️','🔧','🧦','👕','🍎','☕','🎵','📖','🔥','⭐','🧚','📌'];
+const CTXN={start:'Перед началом дела',run:'Во время дела',full:'Дело сделано',part:'Дело сделано частично',sos:'Кнопка «не могу начать»',sos_prep:'Отсчёт 2 минут',sos_go:'Дело начато после отсчёта',sosyes:'После «начала» в кнопке',sosfail:'Не получилось начать',gap:'После перерыва',rest:'Плохой день',tasks:'Экран заданий',final:'Экран финала',dossier:'Главный экран',streak:'Серия дней',rankup:'Новое звание',cap:'Дневной лимит опыта',ach:'Достижение',crystal_spark:'Кристалл засиял',crystal_ding:'Кристалл звенит снова',moment_intro:'Засечь момент',moment_saved:'Момент записан',level_up:'Новый уровень засечки',dir_unlock:'Открылись Чары решимости',dir_confirm:'Чары решимости',unlock_week:'Тестовая неделя пройдена',daily_intro:'Утренняя отметка'};
+const ACH=[
+ {id:'first',ic:'🔥',n:'Первая искра',d:'записать первое дело',xp:5,ck:L=>L.length>=1},
+ {id:'stop',ic:'🛑',n:'Стоп-кадр',d:'нажать «не могу начать» и всё равно начать',xp:10,hid:true,ck:()=>S.sos.some(x=>x.started)},
+ {id:'zero',ic:'⏱️',n:'Отсчёт до нуля',d:'дождаться конца двух минут: дело началось само',xp:10,ck:()=>S.sos.some(x=>x.auto)},
+ {id:'cats',ic:'🌈',n:'Разные направления',d:'дела минимум в 3 категориях',xp:10,ck:L=>new Set(L.map(l=>l.cat)).size>=3},
+ {id:'own',ic:'🪄',n:'Своё заклинание',d:'выполнить дело, которое добавила сама',xp:5,ck:L=>L.some(l=>task(l.task)&&!OLDT[l.task])},
+ {id:'hard',ic:'🦋',n:'Трансформация',d:'довести до конца дело уровня «Трансформация»',xp:10,ck:L=>L.some(l=>l.done&&l.lvl>=3)},
+ {id:'force',ic:'🌪️',n:'Форс-мажор',d:'помеха была, но дело закончено',xp:5,ck:L=>L.some(l=>l.done&&l.intr&&l.intr.length)},
+ {id:'track',ic:'🎧',n:'Под трек',d:'5 дел с музыкой или лекцией на фоне',xp:5,ck:L=>L.filter(l=>l.lecture).length>=5},
+ {id:'d3',ic:'🌱',n:'Три дня подряд',d:'дела три дня подряд',xp:10,ck:()=>streak()>=3},
+ {id:'d7',ic:'🌿',n:'Неделя',d:'7 разных дней с делами',xp:10,ck:()=>days().size>=7},
+ {id:'d14',ic:'🌳',n:'Две недели',d:'14 разных дней с делами',xp:15,ck:()=>days().size>=14},
+ {id:'back',ic:'🕊️',n:'Вернулась',d:'вернуться к делам после перерыва в 3 дня и больше',xp:10,hid:true,ck:()=>comeback()},
+ {id:'rest',ic:'🌙',n:'Честный день',d:'отметить плохой день',xp:5,hid:true,ck:()=>S.logs.some(l=>l.type==='rest')},
+ {id:'moment',ic:'🔍',n:'Поймала момент',d:'засечь первый момент прокрастинации',xp:10,ck:()=>S.moments.length>=1},
+ {id:'m3',ic:'🌿',n:'Следопыт',d:'засечь 3 момента: уровень 2 открыт',xp:10,ck:()=>S.moments.length>=3},
+ {id:'m6',ic:'🔑',n:'Ключ к Чарам решимости',d:'засечь 6 моментов: награда открыта',xp:15,ck:()=>S.moments.length>=6},
+ {id:'m9',ic:'🌟',n:'Мастер момента',d:'засечь 9 моментов: все вопросы открыты',xp:15,ck:()=>S.moments.length>=9},
+ {id:'dir',ic:'🔮',n:'Чары выпущены',d:'выпустить первые Чары решимости',xp:10,ck:()=>S.dirs.some(d=>d.status!=='cancelled')},
+ {id:'dirwin',ic:'✅',n:'Чары сработали',d:'отметить, что Чары решимости помогли',xp:15,ck:()=>S.dirs.some(d=>d.result==='yes')},
+ {id:'truth',ic:'🕰️',n:'Проверка реальности',d:'поправить неверно внесённое время',xp:5,hid:true,ck:()=>S.logs.some(l=>l.fixed)},
+ {id:'sleep',ic:'😴',n:'Лаборатория сна',d:'7 утренних отметок о сне и питании',xp:10,ck:()=>Object.values(S.daily).filter(x=>x.sleep!=null||x.nosleep||x.food!=null).length>=7},
+ {id:'cspark',ic:'💎',n:'Кристалл засиял',d:'выполнить дело из категории, привязанной к кристаллу',xp:5,ck:()=>S.logs.some(l=>l.done&&l.cr>=0)},
+ {id:'rainbow',ic:'🌟',n:'Три цвета',d:'в один день засияли все три кристалла',xp:15,ck:()=>{const m={};S.logs.forEach(l=>{if(l.done&&l.cr>=0)(m[dayKey(l.ts)]??=new Set()).add(l.cr)});return Object.values(m).some(s=>s.size>=3)}},
+ {id:'wk',ic:'🗺️',n:'Карта открыта',d:'пройти тестовую неделю',xp:10,ck:()=>S.weekDone}
+];
+const OPT='<span class="opt">(необязательно)</span>';
+
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const dayKey=t=>new Date(t).toLocaleDateString('sv');
+const fmt=t=>new Date(t).toLocaleString('ru',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+const ruDate=k=>new Date(k+'T00:00').toLocaleDateString('ru');
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const avg=a=>a.length?(a.reduce((s,x)=>s+x,0)/a.length):0;
+const val=id=>document.getElementById(id).value.trim();
+
+const KEY=TEST?'feechka-test-v1':'feechka-v1';
+function fresh(){const cats=DEF_CATS.map(c=>({...c})),col={};cats.slice(1).forEach(c=>col[c.id]=true);
+ return{v:1,name:'',greeted:false,start:null,quest:{start:null},cats,tasks:Object.keys(OLDT).map(id=>({id,name:OLDT[id][0],cat:'home',lvl:OLDT[id][1],first:OLDT[id][2],icon:''})),logs:[],end:null,active:null,sos:[],lines:[],seen:{t:[]},lastBackup:null,ach:{},lvlHist:[],diary:[],trash:[],
+ cr:['','',''],hind:[...DEF_HIND],moments:[],dirs:[],daily:{},collapsed:col,collInit:true,trimInit:true,sleepReset:5,weekDone:false,featSeen:false,testAll:TEST,testStages:false}}
+function fill(s){const f=fresh();for(const k in f)if(s[k]===undefined||(s[k]===null&&!['start','end','active','lastBackup'].includes(k)))s[k]=f[k];if(!s.quest)s.quest={start:null};if(!s.seen||!s.seen.t)s.seen={t:[]};s.v=1;
+ if(!s.collInit){s.collInit=true;s.collapsed={};s.cats.slice(1).forEach(c=>s.collapsed[c.id]=true)}
+ if(!s.trimInit){s.trimInit=true;const drop=['vac','floor','stove','bath','basin'];s.tasks=s.tasks.filter(t=>!drop.includes(t.id))}
+ return s}
+
+let storageOk=true;
+try{localStorage.setItem(KEY+'-t','1');storageOk=localStorage.getItem(KEY+'-t')==='1'}catch(e){storageOk=false}
+navigator.storage?.persist?.();
+function load(){let s=null;try{s=JSON.parse(localStorage.getItem(KEY))}catch(e){}return s?fill(s):fresh()}
+let S=load(),tab=S.start?'tasks':'dossier',jtab='sum',XPM={},WHY={},modalCb=null;
+function save(opt){const a=checkAch();try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){storageOk=false}render();
+ if(a.length&&!(opt&&opt.hold))showAch(a);return a}
+function toast(m,ms){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('on'),ms||Math.max(6000,3000+m.length*80))}
+const task=id=>S.tasks.find(t=>t.id===id);
+const cat=id=>S.cats.find(c=>c.id===id);
+const catKey=id=>id==='hyg'||id==='study'?id:'';
+
+function modal(h){document.getElementById('mcont').innerHTML=h;document.getElementById('modal').hidden=false}
+function closeModal(){document.getElementById('modal').hidden=true;modalCb=null}
+function modalOk(){const f=modalCb;closeModal();if(f)f()}
+function ask(text,okLabel,cb,danger){modalCb=cb;modal(`<p>${esc(text)}</p><div class="row"><button onclick="closeModal()">Отмена</button><button class="${danger?'danger':'pri'}" style="${danger?'':'margin:0;width:auto'}" onclick="modalOk()">${esc(okLabel)}</button></div>`)}
+
+const who=w=>w==='t'?'Фея Текна':'Фея Муза';
+function lineFrom(base,spec,ck){spec=spec||[];ck=ck||base;
+ const own=c=>(LINES[c]||[]).concat(S.lines.filter(x=>x.ctx===c).map(x=>[x.who,x.text]));
+ let pools=[own(base)];if(ck!==base)pools[0]=pools[0].concat(S.lines.filter(x=>x.ctx===ck).map(x=>[x.who,x.text]));
+ const sp=spec.map(c=>LINES[c]||[]).filter(p=>p.length);
+ let pool=pools[0].concat(...sp);if(sp.length&&Math.random()<.5)pool=[].concat(...sp);
+ if(!pool.length)return null;
+ let f=pool.filter(p=>!S.seen.t.includes(p[1]));if(!f.length)f=pool;const p=pick(f);S.seen.t.push(p[1]);S.seen.t=S.seen.t.slice(-120);return p}
+const qt=p=>p?`<div class="quote ${p[0]==='m'?'l':''}"><b>${who(p[0])}:</b> ${esc(p[1])}</div>`:'';
+const sy=p=>p?`${who(p[0])}: ${p[1]}`:'';
+const tod=()=>{const h=new Date().getHours();return h>=5&&h<11?'morning':h>=11&&h<17?'day':h>=17&&h<23?'evening':'night'};
+const stage=()=>{const n=dayN();return n<=7?1:n<=14?2:n<=21?3:n<=30?4:5};
+function startLine(t){const sp=[];if(t.lvl>=4)sp.push('start_hard');else if(t.lvl<=2)sp.push('start_easy');const k=catKey(t.cat);if(k)sp.push('start_'+k);return lineFrom('start',sp)}
+function fullLine(l){const sp=[];if(l.lvl>=4)sp.push('full_hard');else if(l.lvl<=2)sp.push('full_easy');const k=catKey(l.cat);if(k)sp.push('full_'+k);if(l.min&&l.min<=3)sp.push('full_quick');if(l.min>=45)sp.push('full_long');return lineFrom('full',sp)}
+
+function xpMap(){const m={},w={},seen={},first={},ds={};WHY=w;
+ [...S.logs].sort((a,b)=>a.ts-b.ts).forEach(l=>{const d=dayKey(l.ts);let x;const notes=[];
+  if(l.type==='rest'){x=first[d+'r']?0:3;first[d+'r']=1;if(!x)notes.push('режим восстановления за день уже засчитан')}
+  else{x=LV[l.lvl].xp;if(!l.done){x=Math.ceil(x/2);notes.push('частично — половина опыта')}
+   const k=d+'|'+(l.task||l.tname);seen[k]=(seen[k]||0)+1;
+   if(seen[k]===2){x=Math.ceil(x/2);notes.push('повтор того же дела за день — половина')}else if(seen[k]>2){x=Math.min(x,2);notes.push('то же дело больше двух раз за день — по 2 XP')}
+   if(!first[d]){x+=3;first[d]=1;notes.push('+3 за первое дело дня')}
+   const room=Math.max(0,DAYCAP-(ds[d]||0));
+   if(x>room){const over=x-room;x=room+Math.max(room===0?1:0,Math.round(over*OVERRATE));notes.push('дневной лимит '+DAYCAP+' XP набран: сверх него даётся только 10% опыта (минимум 1)')}
+   ds[d]=(ds[d]||0)+x}
+  m[l.id]=x;w[l.id]=notes.join('; ')});return m}
+const xpOf=l=>XPM[l.id]||0;
+const achXp=()=>ACH.filter(a=>S.ach[a.id]).reduce((s,a)=>s+a.xp,0);
+const total=()=>S.logs.reduce((s,l)=>s+xpOf(l),0)+achXp();
+const rank=x=>RANKS.filter(r=>x>=r[0]).pop()[1];
+const nextRank=x=>RANKS.find(r=>r[0]>x);
+const days=()=>new Set(S.logs.map(l=>dayKey(l.ts)));
+const baseDate=()=>S.quest.start||(S.start&&S.start.date)||dayKey(Date.now());
+const dayOf=ts=>Math.floor((new Date(dayKey(ts))-new Date(baseDate()))/864e5)+1;
+const dayN=()=>S.start?dayOf(Date.now()):0;
+const real=()=>S.logs.filter(l=>l.type!=='rest');
+const sortedDays=()=>[...days()].sort();
+const gapDays=(a,b)=>Math.round((new Date(b)-new Date(a))/864e5);
+function streak(){const d=sortedDays();let best=0,cur=0;d.forEach((k,i)=>{cur=(i>0&&gapDays(d[i-1],k)===1)?cur+1:1;best=Math.max(best,cur)});return best}
+function comeback(){const d=sortedDays();return d.some((k,i)=>i>0&&gapDays(d[i-1],k)>=4)}
+function checkAch(){const L=real(),out=[];ACH.forEach(a=>{if(!S.ach[a.id]&&a.ck(L)){S.ach[a.id]=Date.now();out.push(a)}});return out}
+function achBlock(list){return list.length?`<h3>🏆 ${list.length>1?'Достижения':'Достижение'}</h3>${list.map(a=>`<p><b>${esc(a.n)}</b> · +${a.xp} XP<br><span class="hint">${esc(a.d)}</span></p>`).join('')}${qt(lineFrom('ach'))}`:''}
+function showAch(list){modal(`<h2>Новое достижение</h2>${achBlock(list)}<button class="pri" onclick="closeModal()">Ок</button>`)}
+
+function orb(p){const h=Math.round(100*Math.max(.08,Math.min(1,p)));return`<svg class="jar" viewBox="0 0 120 120" role="img" aria-label="Сосуд с магией заполнен на ${Math.round(p*100)}%">
+<defs><clipPath id="co"><circle cx="60" cy="60" r="50"/></clipPath><linearGradient id="lq" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4fd8f5" stop-opacity=".85"/><stop offset="1" stop-color="#8a5cf0" stop-opacity=".9"/></linearGradient></defs>
+<circle cx="60" cy="60" r="50" fill="#f6efff"/>
+<rect clip-path="url(#co)" x="10" y="${110-h}" width="100" height="${h}" fill="url(#lq)"/>
+<path class="shark" d="M60 34l7 15 16 2-12 11 3 16-14-8-14 8 3-16-12-11 16-2z" fill="#ffd23f" stroke="#fff" stroke-width="1.5"/>
+<circle cx="60" cy="60" r="50" fill="none" stroke="#12a6c9" stroke-width="2.5" opacity=".9"/>
+<path d="M30 40a36 36 0 0 1 14-14" stroke="#fff" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".8"/></svg>`}
+function slider(id,v,lo,hi,req){return`<div class="range"><span class="mono">${lo}</span><input type="range" id="${id}" min="${lo}" max="${hi}" value="${v}" data-t="${req?0:1}" oninput="this.dataset.t=1;this.nextElementSibling.nextElementSibling.value=this.value"><span class="mono">${hi}</span><output>${v}</output></div>`}
+const lvPicker=sel=>[1,2,3].map(i=>`<label class="chk"><input type="radio" name="lv" value="${i}" ${i===(sel||2)?'checked':''}><span>${LV[i].e} <b>${LV[i].n}</b> — ${LV[i].h} · +${LV[i].xp} XP</span></label>`).join('');
+const lvVal=()=>+(document.querySelector('[name=lv]:checked')?.value||2);
+const catOpts=sel=>S.cats.map(c=>`<option value="${c.id}" ${c.id===sel?'selected':''}>${esc(c.icon)} ${esc(c.name)}</option>`).join('');
+function emoPicker(id,sel){return`<input type="hidden" id="${id}" value="${esc(sel||'')}"><div class="emo" id="${id}-g">${EMO.map(e=>`<button type="button" class="${e===sel?'on':''}" onclick="pickEmo('${id}','${e}')" aria-label="Эмодзи ${e}">${e}</button>`).join('')}</div>`}
+function pickEmo(id,e){const h=document.getElementById(id),same=h.value===e;h.value=same?'':e;document.querySelectorAll('#'+id+'-g button').forEach(b=>b.classList.toggle('on',!same&&b.textContent===e))}
+
+function render(){
+ XPM=xpMap();
+ document.querySelectorAll('nav button').forEach(b=>b.setAttribute('aria-current',b.dataset.tab===tab));
+ const w=storageOk?'':'<div class="warn">⚠️ Этот браузер не сохраняет данные. </div>';
+ document.getElementById('app').innerHTML=w+({dossier,tasks,journal,final,more})[tab]();
+ renderMission();
+}
+
+function welcome(){
+ return`<h1>Феечка</h1><p class="mono">АЛФЕЯ · ВОЛШЕБНЫЙ ДНЕВНИК</p>
+ <div class="card neon"><div class="quote l"><b>Фея Муза:</b> Привет! Я Муза. Давай вместе разберёмся с делами — по чуть-чуть, в твоём темпе.</div>
+ <div class="quote"><b>Фея Текна:</b> А я Текна. Я буду следить за данными и подсказывать, когда лучше сделать паузу.</div>
+ <div class="quote l"><b>Фея Муза:</b> Как тебя зовут?</div>
+ <label for="nm">Твоё имя</label><input type="text" id="nm" maxlength="40" autocomplete="off" value="${esc(S.name)}">
+ <button class="pri" onclick="setName()">Продолжить</button></div>`}
+function setName(){const n=val('nm');if(!n){toast('Напиши, как тебя зовут');return}S.name=n;S.greeted=true;save()}
+const restToday=()=>S.logs.some(l=>l.type==='rest'&&dayKey(l.ts)===dayKey(Date.now()));
+function dossierOld(){
+ if(!S.start&&!S.greeted)return welcome();
+ if(!S.start)return`<h1>Феечка</h1><p class="mono">${esc(S.name)} · АЛФЕЯ</p>
+ <div class="card neon"><div class="quote l"><b>Фея Муза:</b> Приятно познакомиться, ${esc(S.name)}! Впереди сезон на ${QDAYS} дней. Дела — любые, какие выберешь сама.</div>
+ <div class="quote"><b>Фея Текна:</b> Я буду записывать данные. Они нужны не для оценки, а чтобы было видно, что работает именно у тебя.</div>
+ <h2>Правила</h2><ol><li><b>Действие раньше мотивации.</b> Не ждёшь настроения — делаешь крошечный первый шаг.</li><li><b>Дела и категории свои.</b> Добавляй любые, сложность выбираешь сама и можешь менять.</li><li><b>Отметки до и после дела:</b> настроение, энергия и усталость.</li><li>Помехи и плохие дни — не провал, а <b>данные</b>. Есть режим восстановления и кнопка «не могу начать».</li></ol></div>
+ <div class="card"><h2>Первая запись</h2>
+ <label for="ez">Насколько просто тебе сейчас справляться со скучными делами?</label><p class="hint">1 — совсем никак, 10 — легко и без усилий</p>${slider('ez',1,1,10)}
+ <label for="eznote">Пара слов о том, как это сейчас ощущается ${OPT}</label><textarea id="eznote"></textarea>
+ <button class="pri" onclick="startExp()">Начать сезон</button></div>`;
+ const x=total(),nr=nextRank(x),dd=days(),n=dayN(),d0=new Date(baseDate()),st=stage();
+ const month=[...Array(QDAYS)].map((_,i)=>{const k=dayKey(d0.getTime()+i*864e5+12*36e5);return`<span class="${dd.has(k)?'on':''} ${i+1===n?'now':''}">${i+1}</span>`}).join('');
+ const cs={};real().forEach(l=>{const c=cs[l.cat]||(cs[l.cat]={name:(cat(l.cat)||{name:l.cname}).name,icon:(cat(l.cat)||{icon:'📌'}).icon,xp:0,n:0});c.xp+=xpOf(l);c.n++});
+ const chips=Object.values(cs).map(c=>`<span class="chip">${esc(c.icon)} ${esc(c.name)} — ${c.xp} XP · ${c.n}</span>`).join('')||'<span class="hint">Пока нет записей.</span>';
+ const last=S.logs.length?Math.max(...S.logs.map(l=>l.ts)):0;
+ const gap=S.logs.length&&Date.now()-last>3*864e5?qt(lineFrom('gap')):'';
+ const bk=S.logs.length>=3&&(!S.lastBackup||Date.now()-S.lastBackup>5*864e5)?'<div class="card"><b>Копия данных.</b> <span class="hint">Сделай резервную копию: вкладка «Ещё» → «Данные». Если очистится браузер, записи пропадут.</span></div>':'';
+ const got=ACH.filter(a=>S.ach[a.id]).length;
+ const br=BRIEF[st].map(p=>qt(p)).join('');
+ const restCard=restToday()?`<div class="card"><p>🌙 Сегодня отмечен плохой день.</p><button class="danger" style="width:100%" onclick="cancelRest()">Отменить режим плохого дня</button><p class="hint">Отметка исчезнет, и день перестанет считаться днём сезона, если за него нет других записей.</p></div>`:`<div class="card"><button style="width:100%" onclick="restDay()">🌙 Плохой день — режим восстановления</button><p class="hint">Засчитывается как день сезона и даёт немного опыта. Без отчёта.</p></div>`;
+ return`<h1>Привет, ${esc(S.name||'фея')}</h1><p class="mono">ДЕНЬ ${Math.max(1,n)} ИЗ ${QDAYS} · СТАРТ ${ruDate(baseDate())}</p>${gap}
+ <div class="card neon"><div class="mono">НЕДЕЛЯ ${Math.min(st,4)}${st===5?' · СРОК ВЫШЕЛ':''}</div>${br}${qt(lineFrom('dossier_d'+st,[],'dossier'))}</div>
+ <div class="card neon top">${orb(x/GOAL)}<div style="flex:1"><div class="mono">ЗВАНИЕ</div><h2 style="color:var(--pink)">${rank(x)}</h2>
+ <div class="mono">МАГИЯ: ${x} / ${GOAL} XP</div><div class="bar"><i style="width:${Math.min(100,x/GOAL*100)}%"></i></div>
+ <p class="hint">${nr?`До «${nr[1]}» — ${nr[0]-x} XP`:'Сосуд полон. Магия на месте.'}</p></div></div>
+ ${bk}<div class="card"><h2>Сезон</h2><div class="month">${month}</div><p class="hint">Концовку смотри во вкладке «Финал».</p></div>
+ <div class="card"><h2>Направления</h2><div class="chips">${chips}</div><button class="ghost" style="width:100%;margin-top:6px" onclick="tab='journal';jtab='dyn';render();scrollTo(0,0)">Смотреть динамику по направлениям →</button></div>
+ ${restCard}
+ <div class="card"><h2>Достижения ${got}/${ACH.length}</h2><div class="badges">${ACH.map(a=>{const on=!!S.ach[a.id];return`<div class="badge ${on?'on':''}"><b>${on?'★':'☆'} ${on||!a.hid?esc(a.n):'???'} · +${a.xp}</b>${on||!a.hid?esc(a.d):'скрытое достижение'}</div>`}).join('')}</div></div>
+ <div class="card"><p class="hint">Опыт за дело: ${[1,2,3].map(i=>LV[i].n+' '+LV[i].xp).join(' · ')}. Не доделала — половина. Первое дело дня +3. Повтор того же дела за день — половина, третий раз и далее по 2. С дел не больше ${DAYCAP} XP в день; сверх лимита даётся 10% опыта (минимум 1). Достижения дают разовый опыт.</p></div>`;
+}
+function startExp(){S.start={date:dayKey(Date.now()),ease:+val('ez'),note:val('eznote')};S.quest={start:S.start.date};tab='tasks';save();toast('Фея Муза: Сезон начался. Вперёд!')}
+function restDay(){if(restToday()){toast('Режим восстановления на сегодня уже отмечен.');return}
+ S.logs.push({id:Date.now(),ts:Date.now(),type:'rest',task:'',tname:'Режим восстановления',cat:'',cname:'',lvl:0,min:0,resist:null,after:null,done:true,intr:[],note:'',lecture:'',first:'',quick:true});
+ const m=sy(lineFrom('rest'));save();toast(m)}
+function cancelRest(){ask('Отменить режим плохого дня на сегодня? Отметка будет удалена.','Отменить режим',()=>{
+ S.logs=S.logs.filter(l=>!(l.type==='rest'&&dayKey(l.ts)===dayKey(Date.now())));
+ if(!S.logs.some(l=>l.type==='rest'))delete S.ach.rest;
+ save();toast('Режим плохого дня отменён.')},true)}
+
+function tasks(){
+ if(!S.start)return`<h1>Задания</h1><div class="card">Сначала заполни первую запись на главном экране.</div>`;
+ const cnt=id=>S.logs.filter(l=>l.task===id).length;
+ return`<h1>Задания</h1>${qt(lineFrom('tasks_'+tod(),[],'tasks'))}
+ <button class="sos" onclick="openSos()">🆘 Не могу начать</button>
+ ${S.cats.map(c=>{const ts=S.tasks.filter(t=>t.cat===c.id);return`<div class="card"><h2>${esc(c.icon)} ${esc(c.name)}</h2>
+ ${ts.map(t=>{const L=LV[t.lvl];return`<div class="task"><span class="ti">${esc(t.icon||L.e)}</span><span class="n">${esc(t.name)}<br><span class="c ${L.c}">${L.n} · +${L.xp} XP${cnt(t.id)?' · ✓ '+cnt(t.id):''}</span></span><button class="sb" title="Название и сложность" aria-label="Название и сложность: ${esc(t.name)}" onclick="openLvl('${t.id}')">⇅</button><button class="sb" title="Начать" aria-label="Начать: ${esc(t.name)}" onclick="begin('${t.id}')">▶</button><button class="sb" title="Записать постфактум" aria-label="Записать постфактум: ${esc(t.name)}" onclick="openQuick('${t.id}')">✓</button></div>`}).join('')||'<p class="hint">Пока нет дел. Добавь своё.</p>'}
+ <button class="ghost" style="width:100%" onclick="openNewTask('${c.id}')">+ Добавить дело</button></div>`}).join('')}
+ <button style="width:100%" onclick="openNewCat()">+ Новая категория</button>
+ <p class="hint">⇅ — изменить название и сложность дела (сложность действует на новые записи). ▶ — начать дело с таймером. ✓ — дело уже сделано, записать постфактум.</p>`;
+}
+function begin(id){S.active={kind:'task',task:id,step:'go'};save()}
+function openQuick(id){S.active={kind:'quick',task:id};save()}
+function openNewTask(c){S.active={kind:'newtask',cat:c};save()}
+function openNewCat(){S.active={kind:'newcat'};save()}
+function openSos(){S.active={kind:'sos',step:'pick'};save()}
+function openLvl(id){S.active={kind:'lvl',task:id};save()}
+function closeAct(){S.active=null;save()}
+function cancelAct(){const A=S.active;if(A&&((A.kind==='task'&&A.step!=='go')||(A.kind==='sos'&&A.step==='run')))ask('Закрыть? Запись не сохранится.','Закрыть',closeAct,true);else closeAct()}
+function mkTask(name,c,lvl,icon){const t={id:uid(),name,cat:c,lvl,first:'',icon:icon||''};S.tasks.push(t);return t}
+function saveTask(){const n=val('tn');if(!n){toast('Напиши название дела');return}mkTask(n,val('tc'),lvVal(),val('ei'));S.active=null;save();toast('Дело добавлено')}
+function saveCat(){const n=val('cn');if(!n){toast('Напиши название категории');return}const c={id:uid(),name:n,icon:val('ci')||'📌'};S.cats.push(c);const tn=val('tn');if(tn)mkTask(tn,c.id,lvVal(),'');S.active=null;save();toast('Категория добавлена')}
+function saveLvl(){const t=task(S.active.task),v=lvVal(),n=val('tnm').slice(0,60);if(!t){S.active=null;save();return}
+ if(!n){toast('Название не может быть пустым');return}
+ const msgs=[];
+ if(n!==t.name){t.name=n;S.logs.forEach(l=>{if(l.task===t.id)l.tname=n});msgs.push('название')}
+ if(v!==t.lvl){S.lvlHist.push({ts:Date.now(),task:t.id,tname:t.name,from:t.lvl,to:v});t.lvl=v;msgs.push('сложность')}
+ S.active=null;save();toast(msgs.length?'Обновлено: '+msgs.join(' и '):'Без изменений')}
+
+function renderMission(){
+ const m=document.getElementById('mission'),A=S.active;m.hidden=!A;if(!A)return;
+ const cancel=A.kind==='lvl'?'':`<button class="ghost" style="width:100%;margin-top:8px" onclick="cancelAct()">Отмена</button>`;
+ let h='';const bad=()=>{S.active=null;m.hidden=true};
+ if(A.kind==='newtask')h=`<h1>Новое дело</h1><div class="card"><label for="tn">Название</label><input type="text" id="tn" maxlength="60"><label for="tc">Категория</label><select id="tc">${catOpts(A.cat)}</select><label>Сложность — насколько тяжело именно тебе</label>${lvPicker(2)}<label>Значок ${OPT}</label>${emoPicker('ei','')}<button class="pri" onclick="saveTask()">Добавить</button></div>`;
+ else if(A.kind==='newcat')h=`<h1>Новая категория</h1><div class="card"><label for="cn">Название</label><input type="text" id="cn" maxlength="40"><label>Значок ${OPT}</label>${emoPicker('ci','📌')}
+  <h2 style="margin-top:18px">Первое дело в ней ${OPT}</h2><label for="tn">Название дела</label><input type="text" id="tn" maxlength="60"><label>Сложность</label>${lvPicker(2)}<button class="pri" onclick="saveCat()">Создать</button></div>`;
+ else if(A.kind==='lvl'){const t=task(A.task);if(!t)return bad();h=`<h1>Дело</h1><div class="card"><label for="tnm">Название</label><input type="text" id="tnm" maxlength="60" value="${esc(t.name)}"><p class="hint">Новое название появится и в прошлых записях журнала.</p><label>Сложность</label>${lvPicker(t.lvl)}<p class="hint">Изменение сложности действует на новые записи. Прошлые остаются как были.</p><button class="pri" onclick="saveLvl()">Сохранить</button></div>`}
+ else if(A.kind==='quick'){const t=task(A.task);if(!t)return bad();h=`<p class="mono">ЗАПИСЬ ПОСТФАКТУМ</p><h1>${esc(t.name)}</h1><div class="card"><label for="mn">Сколько минут заняло дело?</label><input type="number" id="mn" min="1" max="600" inputmode="numeric" placeholder="минуты">
+  <label for="rs">Насколько не хотелось начинать?</label><p class="hint">0 — совсем не мешало, 10 — очень сильно не хотелось</p>${slider('rs',1,1,10)}
+  <label for="a">Настроение сейчас</label><p class="hint">1 — очень плохо, 10 — отлично</p>${slider('a',5,1,10)}
+  <label class="chk"><input type="checkbox" id="pt"> Сделано частично</label>
+  <label for="nt">Заметка ${OPT}</label><p class="hint">Сюда можно вписать то, что помогало или мешало, или что-то ещё.</p><textarea id="nt"></textarea><button class="pri" onclick="saveQuick()">Записать</button></div>`}
+ else if(A.kind==='sos'){
+  if(A.step==='pick')h=`<h1>Не могу начать</h1>${qt(lineFrom('sos'))}<div class="card"><label for="st">С какого дела начнём?</label><select id="st">${S.cats.map(c=>`<optgroup label="${esc(c.icon+' '+c.name)}">${S.tasks.filter(t=>t.cat===c.id).map(t=>`<option value="${t.id}">${esc(t.name)}</option>`).join('')}</optgroup>`).join('')}</select>
+   <label for="sm">Самое маленькое действие ${OPT}</label><input type="text" id="sm" maxlength="120" placeholder="например: просто взять в руки"><p class="hint">Не решай, будешь ли делать всё. Две минуты — только этот шаг.</p><button class="pri" onclick="sosGo()">▶ Две минуты</button></div>`;
+  else h=`<h1>Две минуты</h1><div class="timer" id="tm">02:00</div>${A.first?`<div class="first">Шаг: ${esc(A.first)}</div>`:''}<p class="hint">Дело: ${esc((task(A.task)||{name:''}).name)}</p><button class="pri" onclick="sosYes()">Начала — продолжаю</button><button class="ghost" style="width:100%;margin-top:8px" onclick="sosNo()">Не вышло</button>`;
+ }
+ else if(A.kind==='task'){
+  const t=task(A.task);if(!t)return bad();const L=LV[t.lvl];
+  const head=`<p class="mono">ЗАДАНИЕ · ${L.e} ${L.n.toUpperCase()}</p><h1>${esc(t.icon||'')} ${esc(t.name)}</h1>`;
+  if(A.step==='go'){if(!A.q)A.q=qt(startLine(t));h=head+`${A.q}<div class="card neon"><h2>Первый шаг — прямо сейчас</h2><label for="fs">Одно маленькое действие, с которого начнёшь ${OPT}</label>
+   <input type="text" id="fs" class="first" maxlength="120" placeholder="например: ${esc(t.first||'сделать первое движение')}"><p class="hint">Не решай, будешь ли делать всё дело. Сделай только этот шаг.</p>
+   <label for="lec">Что на фоне: трек, лекция ${OPT}</label><input type="text" id="lec" maxlength="120">
+   <label for="wn">Насколько хочется начать это дело?</label><p class="hint">1 — совсем не хочется, 10 — очень хочется</p>${slider('wn',5,1,10)}
+   <button class="pri" onclick="goRun()">▶ Начинаю</button></div>`}
+  if(A.step==='run'){if(!A.q)A.q=qt(lineFrom('run'));h=head+`<div class="timer" id="tm">00:00</div>${A.q}${A.first?`<div class="first">Шаг 1: ${esc(A.first)}</div>`:''}${A.lecture?`<p class="hint">На фоне: ${esc(A.lecture)}</p>`:''}<button class="pri" onclick="S.active.min=Math.max(1,Math.round((Date.now()-S.active.startTs)/6e4));S.active.step='after';save()">■ Закончила / остановилась</button>`}
+  if(A.step==='after')h=head+`<div class="card"><label for="rs">Насколько не хотелось начинать?</label><p class="hint">0 — совсем не мешало, 10 — очень сильно не хотелось</p>${slider('rs',1,1,10)}
+   <label for="a">Настроение сейчас</label><p class="hint">1 — очень плохо, 10 — отлично</p>${slider('a',5,1,10)}
+   <label>Дело доведено до конца?</label><label class="chk"><input type="radio" name="dn" value="1" checked> Да, полностью</label><label class="chk"><input type="radio" name="dn" value="0"> Частично / пришлось прерваться</label>
+   <label>Что мешало? ${OPT}</label>${INTR.map((s,i)=>`<label class="chk"><input type="checkbox" name="in" value="${i}"> ${s}</label>`).join('')}
+   <label for="nt">Заметка ${OPT}</label><p class="hint">Сюда можно вписать то, что помогало или мешало, или что-то ещё.</p><textarea id="nt"></textarea>
+   <button class="pri" onclick="finish()">Записать в дневник</button></div>`;
+ }
+ document.getElementById('mbody').innerHTML=h+cancel;
+}
+function goRun(){const A=S.active;A.first=val('fs');A.lecture=val('lec');A.want=+val('wn');A.startTs=Date.now();A.step='run';A.q='';save()}
+function mkLog(t,o){const c=cat(t.cat)||{name:'—'};return Object.assign({id:Date.now(),ts:Date.now(),type:'task',task:t.id,tname:t.name,cat:t.cat,cname:c.name,lvl:t.lvl,min:0,want:null,resist:null,after:null,done:true,intr:[],note:'',lecture:'',first:'',quick:false},o)}
+function pushLog(l){const tb=total(),rb=rank(tb);S.logs.push(l);S.active=null;tab='dossier';XPM=xpMap();const ra=rank(total());const a=save({hold:true});
+ const x=xpOf(l),why=WHY[l.id]||'',td=S.logs.filter(z=>dayKey(z.ts)===dayKey(l.ts)).length;
+ let h=`<h2>Записано</h2><div class="bigxp">+${x} XP</div>${why?`<p class="hint">${esc(why)}</p>`:''}${qt(l.done?fullLine(l):lineFrom('part'))}`;
+ if(why.includes('лимит'))h+=qt(lineFrom('cap'));
+ if(td===1&&streak()>=3)h+=qt(lineFrom('streak'));
+ if(ra!==rb)h+=`<h3>⭐ Новое звание: ${esc(ra)}</h3>${qt(lineFrom('rankup'))}`;
+ h+=achBlock(a)+`<button class="pri" onclick="closeModal()">Ок</button>`;modal(h)}
+function finish(){const A=S.active,t=task(A.task);
+ pushLog(mkLog(t,{ts:A.startTs||Date.now(),min:A.min||0,want:A.want??null,resist:+val('rs'),after:+val('a'),done:document.querySelector('[name=dn]:checked').value==='1',intr:[...document.querySelectorAll('[name=in]:checked')].map(c=>INTR[c.value]),note:val('nt'),lecture:A.lecture||'',first:A.first||''}))}
+function saveQuick(){const t=task(S.active.task),mn=+val('mn');if(!(mn>=1)){toast('Укажи, сколько минут заняло дело');return}
+ pushLog(mkLog(t,{ts:Date.now()-mn*6e4,resist:+val('rs'),after:+val('a'),min:mn,done:!document.getElementById('pt').checked,note:val('nt'),quick:true}))}
+function sosGo(){const A=S.active;if(!document.getElementById('st').value){toast('Сначала добавь хотя бы одно дело');return}A.task=val('st');A.first=val('sm');A.sosTs=Date.now();A.step='run';save()}
+function sosYes(){const A=S.active;S.sos.push({ts:A.sosTs,task:A.task,started:true});
+ S.active={kind:'task',task:A.task,step:'run',first:A.first,lecture:'',want:null,startTs:Date.now(),sos:true,q:qt(lineFrom('sosyes'))};save()}
+function sosNo(){const A=S.active;S.sos.push({ts:A.sosTs,task:A.task,started:false});S.active=null;const m=sy(lineFrom('sosfail'));save();toast(m)}
+setInterval(()=>{const e=document.getElementById('tm'),A=S.active;if(!e||!A)return;
+ if(A.kind==='task'&&A.startTs){const s=Math.floor((Date.now()-A.startTs)/1e3);e.textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
+ if(A.kind==='sos'&&A.sosTs){const s=Math.max(0,120-Math.floor((Date.now()-A.sosTs)/1e3));e.textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}},1000);
+
+function statsOf(L){const m=k=>L.map(l=>l[k]).filter(v=>v!=null&&v!==''&&!isNaN(v));
+ return{n:L.length,full:L.length?Math.round(L.filter(l=>l.done).length/L.length*100):0,res:avg(m('en0')),resN:m('en0').length,aft:avg(m('after')),aftN:m('after').length,wnt:avg(m('mood0')),wntN:m('mood0').length,min:L.reduce((s,l)=>s+(l.min||0),0),days:new Set(L.map(l=>dayKey(l.ts))).size}}
+const stats=()=>statsOf(real());
+function journal(){
+ const tabs=[['logs','Дела'],['hist','История'],['dyn','Динамика'],['diary','Дневник']];
+ const sw=`<div class="row" style="margin-bottom:12px">${tabs.map(t=>`<button class="${jtab===t[0]?'sel':''}" onclick="jtab='${t[0]}';render()">${t[1]}</button>`).join('')}</div>`;
+ return`<h1>Журнал</h1>${sw}${({logs:logsView,hist:history,dyn:dynamics,diary})[jtab]()}`;
+}
+function statsCard(s){return`<div class="card"><div class="stats"><div><b>${s.n}</b>дел записано</div><div><b>${s.days}</b>дней с записями</div><div><b>${s.full}%</b>доведено до конца</div><div><b>${s.min}</b>минут всего</div><div><b>${s.wntN?s.wnt.toFixed(1):'—'}</b>среднее «хочется начать» до дела (1–10)</div><div><b>${s.resN?s.res.toFixed(1):'—'}</b>среднее «не хотелось начинать» после (1–10)</div><div><b>${s.aftN?s.aft.toFixed(1):'—'}</b>среднее настроение после</div></div></div>`}
+function logsView(){
+ if(!S.logs.length)return`<div class="card">Пока пусто. Первое дело — во вкладке «Задания».</div>`;
+ return statsCard(stats())+`<div class="card" style="overflow-x:auto"><table><tr><th>Когда</th><th>Дело</th><th>Оценки</th><th>Заметки</th></tr>
+ ${[...S.logs].sort((a,b)=>b.ts-a.ts).map(l=>l.type==='rest'?`<tr><td>${fmt(l.ts)}<br><span class="hint">+${xpOf(l)} XP</span></td><td>🌙 Режим восстановления</td><td>—</td><td>—</td></tr>`:
+ `<tr><td>${fmt(l.ts)}<br><span class="hint">${l.min||0} мин · +${xpOf(l)} XP${WHY[l.id]?'<br>'+esc(WHY[l.id]):''}</span></td><td>${LV[l.lvl].e} ${esc(l.tname)}${l.done?'':' <span class="hint">(частично)</span>'}<br><span class="hint">${esc(l.cname)}</span>${l.lecture?`<br><span class="hint">🎧 ${esc(l.lecture)}</span>`:''}</td><td>${l.mood0!=null?`настроение до: <b>${l.mood0}</b> · энергия: <b>${l.en0}</b><br>`:''}${l.after!=null?`настроение после: <b>${l.after}</b>`:''}${l.fat1!=null?` · усталость: <b>${l.fat1}</b>`:''}</td><td>${esc((l.intr||[]).join('; '))||'—'}${l.note?`<br><span class="hint">${esc(l.note)}</span>`:''}</td></tr>`).join('')}
+ </table></div>`;
+}
+function history(){
+ if(!S.logs.length&&!S.sos.length)return`<div class="card">История появится после первого дела.</div>`;
+ const by={};S.logs.forEach(l=>(by[dayKey(l.ts)]??=[]).push(l));
+ const sosBy={};S.sos.forEach(x=>(sosBy[dayKey(x.ts)]??=[]).push(x));
+ const achBy={};ACH.forEach(a=>{if(S.ach[a.id])(achBy[dayKey(S.ach[a.id])]??=[]).push(a)});
+ const dxp=k=>(by[k]||[]).reduce((s,l)=>s+xpOf(l),0)+(achBy[k]||[]).reduce((s,a)=>s+a.xp,0);
+ const keys=[...new Set([...Object.keys(by),...Object.keys(sosBy),...Object.keys(achBy)])].sort().reverse();
+ const bars=[...Array(14)].map((_,i)=>dayKey(Date.now()-(13-i)*864e5));const mx=Math.max(1,...bars.map(dxp));
+ const spark=`<div class="card"><h2>Последние 14 дней</h2><div class="spark">${bars.map(k=>`<i class="${dxp(k)?'':'z'}" style="height:${dxp(k)?Math.max(8,dxp(k)/mx*100):3}%" title="${ruDate(k)}: ${dxp(k)} XP"></i>`).join('')}</div><p class="hint">Высота столбика — опыт за день.</p></div>`;
+ const dn=k=>new Date(k+'T12:00').toLocaleDateString('ru',{weekday:'short',day:'numeric',month:'long'});
+ const cards=keys.map(k=>{const L=(by[k]||[]).sort((a,b)=>a.ts-b.ts),mins=L.reduce((s,l)=>s+(l.min||0),0),n=L.filter(l=>l.type!=='rest').length;
+  return`<div class="card"><div class="rowl" style="border:0;padding:0"><b>${esc(dn(k))}</b><span class="hint">день ${dayOf(new Date(k+'T12:00').getTime())} · ${n} дел${mins?' · '+mins+' мин':''} · +${dxp(k)} XP</span></div>
+  ${L.map(l=>l.type==='rest'?`<div class="hl"><span class="e">🌙</span><span>Режим восстановления</span></div>`:`<div class="hl"><span class="e">${esc((task(l.task)||{}).icon||LV[l.lvl].e)}</span><span><b>${esc(l.tname)}</b> <span class="hint">${esc(l.cname)} · ${LV[l.lvl].n}${l.done?'':' · частично'}</span><br><span class="hint">${new Date(l.ts).toLocaleTimeString('ru',{hour:'2-digit',minute:'2-digit'})} · ${l.min||0} мин · +${xpOf(l)} XP${l.mood0!=null?' · настроение до: '+l.mood0+', энергия: '+l.en0:''}${l.after!=null?' · настроение после: '+l.after:''}${l.fat1!=null?' · усталость: '+l.fat1:''}</span>${l.note?`<br><span class="hint">📝 ${esc(l.note)}</span>`:''}</span></div>`).join('')}
+  ${(sosBy[k]||[]).map(x=>`<div class="hl"><span class="e">🆘</span><span>«Не могу начать»: ${x.started?'получилось начать':'в этот раз не вышло'}</span></div>`).join('')}
+  ${(achBy[k]||[]).map(a=>`<div class="hl"><span class="e">🏆</span><span><b>${esc(a.n)}</b> <span class="hint">+${a.xp} XP</span></span></div>`).join('')}</div>`}).join('');
+ return spark+cards}
+
+/* ===== Динамика по направлениям ===== */
+const weekOf=ts=>Math.floor((dayOf(ts)-1)/7)+1;
+function weekRange(){const cur=Math.max(1,weekOf(Date.now())),end=Math.max(4,cur),start=Math.max(1,end-7);return Array.from({length:end-start+1},(_,i)=>start+i)}
+const avgOf=(L,k)=>{const v=L.map(l=>l[k]).filter(x=>x!=null&&x!==''&&!isNaN(x));return v.length?avg(v):null};
+const f1=v=>v==null?'—':v.toFixed(1);
+function trendText(vals){const nn=vals.filter(v=>v!=null);if(nn.length<2)return'пока мало данных';const a=nn[nn.length-2],b=nn[nn.length-1],d=b-a;return Math.abs(d)<0.5?'→ без заметных изменений':(d>0?'↑ +':'↓ ')+d.toFixed(1)+' к предыдущей неделе с данными'}
+function catData(){const ids=[];S.cats.forEach(c=>ids.push(c.id));real().forEach(l=>{if(!ids.includes(l.cat))ids.push(l.cat)});
+ return ids.map(id=>({id,name:(cat(id)||{name:(real().find(l=>l.cat===id)||{}).cname||'—'}).name,icon:(cat(id)||{icon:'📌'}).icon}))}
+function dynamics(){
+ if(!real().length)return'<div class="card">Динамика появится, когда будут записи о делах.</div>';
+ const W=weekRange(),cd=catData();
+ const by=(c,w)=>real().filter(l=>l.cat===c&&weekOf(l.ts)===w);
+ const mx=Math.max(1,...cd.flatMap(c=>W.map(w=>by(c.id,w).length)));
+ const heat=`<div class="card" style="overflow-x:auto"><h2>Сравнение направлений</h2><table class="heat"><tr><th>Направление</th>${W.map(w=>`<th>Н${w}</th>`).join('')}</tr>${cd.map(c=>`<tr><td>${esc(c.icon)} ${esc(c.name)}</td>${W.map(w=>{const n=by(c.id,w).length;return`<td style="background:rgba(138,92,240,${n?(.12+.5*n/mx).toFixed(2):0})">${n||'·'}</td>`}).join('')}</tr>`).join('')}</table><p class="hint">Число дел по неделям сезона. Н1 — первая неделя после старта.</p></div>`;
+ const cards=cd.map(c=>{const all=real().filter(l=>l.cat===c.id);
+  if(!all.length)return`<div class="card"><h2>${esc(c.icon)} ${esc(c.name)}</h2><p class="hint">Пока нет записей в этом направлении.</p></div>`;
+  const cnt=W.map(w=>by(c.id,w).length),mxx=Math.max(1,...cnt);
+  const mins=W.map(w=>by(c.id,w).reduce((s,l)=>s+(l.min||0),0));
+  const want=W.map(w=>avgOf(by(c.id,w),'mood0')),res=W.map(w=>avgOf(by(c.id,w),'en0')),aft=W.map(w=>avgOf(by(c.id,w),'after'));
+  const bars=`<div class="wk">${W.map((w,i)=>`<div class="wc"><span class="v">${cnt[i]||''}</span><i class="${cnt[i]?'':'z'}" style="height:${cnt[i]?Math.max(10,Math.round(cnt[i]/mxx*70)):3}px"></i><span>Н${w}</span></div>`).join('')}</div>`;
+  const row=(label,arr,fn)=>`<tr><th>${label}</th>${arr.map(v=>`<td>${fn(v)}</td>`).join('')}</tr>`;
+  const tb=`<table class="heat"><tr><th></th>${W.map(w=>`<th>Н${w}</th>`).join('')}</tr>${row('Минут',mins,v=>v||'·')}${row('Настроение до',want,f1)}${row('Энергия до',res,f1)}${row('Настроение после',aft,f1)}</table>`;
+  return`<div class="card"><h2>${esc(c.icon)} ${esc(c.name)}</h2><p class="hint">Всего: ${all.length} дел, ${all.reduce((s,l)=>s+(l.min||0),0)} мин, ${all.reduce((s,l)=>s+xpOf(l),0)} XP</p>${bars}<div style="overflow-x:auto">${tb}</div>
+  <p class="hint">Настроение до: ${trendText(want)}</p><p class="hint">Энергия до: ${trendText(res)}</p><p class="hint">Настроение: ${trendText(aft)}</p></div>`}).join('');
+ return heat+cards+'<p class="hint">«·» и «—» значат, что записей не было. Одна неделя — мало данных, смотри на несколько недель подряд.</p>'}
+function dynLines(){const W=weekRange(),cd=catData();const r=['','ДИНАМИКА ПО НАПРАВЛЕНИЯМ (недели сезона):'];
+ cd.forEach(c=>{const parts=W.map(w=>{const L=real().filter(l=>l.cat===c.id&&weekOf(l.ts)===w);if(!L.length)return`Н${w}: —`;return`Н${w}: ${L.length} дел, ${L.reduce((s,l)=>s+(l.min||0),0)} мин, настроение до ${f1(avgOf(L,'mood0'))}, энергия до ${f1(avgOf(L,'en0'))}, настроение ${f1(avgOf(L,'after'))}`});r.push(`• ${c.name}: `+parts.join(' | '))});return r}
+
+function diary(){const L=[...S.diary].sort((a,b)=>b.ts-a.ts);
+ return`<div class="card"><h2>Новая запись</h2><p class="hint">Пиши что угодно: мысли, как прошёл день, что получилось, а что нет. Записи остаются в приложении, и ты можешь перечитать их здесь.</p>
+ <label for="dt">Запись</label><textarea id="dt" style="min-height:120px"></textarea>
+ <label class="chk"><input type="checkbox" id="dsh" checked> Включить в отчёт для психолога</label><p class="hint">Если снять галочку, запись останется только у тебя. Позже её можно включить в отчёт кнопкой 🔄 рядом с записью.</p>
+ <button class="pri" onclick="addDiary()">Сохранить запись</button></div>${momentBlock()}
+ ${L.map(d=>`<div class="card"><div class="rowl" style="border:0;padding:0"><span class="mono">${fmt(d.ts)} · ${d.share?'в отчёте':'только для меня'}</span><span><button class="x" title="${d.share?'Убрать из отчёта':'Включить в отчёт'}" aria-label="${d.share?'Убрать запись из отчёта':'Включить запись в отчёт'}" onclick="toggleShare('${d.id}')">🔄</button><button class="x" aria-label="Удалить запись дневника" onclick="delDiary('${d.id}')">🗑</button></span></div><p style="white-space:pre-wrap;margin:6px 0 0">${esc(d.text)}</p>${d.share?'':'<p class="hint">🔄 — включить эту запись в отчёт для психолога.</p>'}</div>`).join('')||'<p class="hint">Записей пока нет.</p>'}`}
+function toggleShare(id){const d=S.diary.find(x=>x.id===id);if(!d)return;
+ if(d.share){d.share=false;save();toast('Запись убрана из отчёта. Она остаётся только у тебя.')}
+ else ask('Включить эту запись в отчёт для психолога? Она появится в отчёте при следующей выгрузке.','Включить',()=>{d.share=true;save();toast('Запись включена в отчёт.')})}
+function addDiary(){const t=val('dt');if(!t){toast('Сначала напиши текст записи');return}S.diary.push({id:uid(),ts:Date.now(),text:t,share:document.getElementById('dsh').checked});save();toast('Запись сохранена')}
+function delDiary(id){ask('Удалить запись дневника? Её можно будет вернуть из корзины.','Удалить',()=>{const d=S.diary.find(x=>x.id===id);if(!d)return;S.diary=S.diary.filter(x=>x.id!==id);S.trash.push({id:uid(),kind:'diary',ts:Date.now(),data:d});save();toast('Удалено. Вернуть можно в «Ещё» → «Корзина».')},true)}
+
+function endState(){const x=total(),cs=new Set(real().map(l=>l.cat)).size,d=days().size,n=dayN();
+ let id=null;if(x>=GOAL){id=1;if(cs>=NEED_CATS){id=2;if(d>=NEED_DAYS)id=3}}else if(n>QDAYS)id=0;return{x,cs,d,n,id}}
+function catsDone(){const ids=[...new Set(real().map(l=>l.cat))];return ids.map(id=>(cat(id)||{name:(real().find(l=>l.cat===id)||{}).cname||'—'}).name).join(', ')}
+function final(){
+ if(!S.start)return`<h1>Финал</h1><div class="card">Сначала начни сезон на главном экране.</div>`;
+ const E=S.end||{},q=v=>E.quar===v?'checked':'',es=endState(),has=!!S.end;
+ const g=(ok,t)=>`<div class="goal ${ok?'ok':''}">${ok?'★':'☆'} ${t}</div>`;
+ let endCard='';if(es.id!==null){const e=ENDS[es.id],s=stats(),cd=catsDone();
+  const lines=e[1].map(r=>[r[0],r[1].replace('{cats}',cd)]);
+  endCard=`<div class="card neon"><h2>Концовка: ${e[0]}</h2>${lines.map(qt).join('')}
+  <p class="hint">Итоги сезона: ${s.n} дел, ${s.min} мин, ${s.days} дн. с записями, ${es.cs} направл., достижений: ${ACH.filter(a=>S.ach[a.id]).length} из ${ACH.length}.</p>${es.id===0?'<p class="hint">Прогресс сохранён, сезон можно продолжать.</p>':'<p class="hint">Можно продолжать дальше — записи сохраняются.</p>'}</div>`}
+ return`<h1>Финал сезона</h1><p class="mono">ДЕНЬ ${Math.max(1,es.n)} ИЗ ${QDAYS}</p>${qt(lineFrom('final'))}
+ <div class="card"><h2>Условия концовок</h2>${g(es.x>=GOAL,`Опыт: ${es.x} / ${GOAL} — «Сезон закрыт»`)}${g(es.cs>=NEED_CATS,`Направления: ${es.cs} / ${NEED_CATS} — «Доступ расширен»`)}${g(es.d>=NEED_DAYS,`Дни с записями: ${es.d} / ${NEED_DAYS} — «Свой сезон»`)}<p class="hint">Плохой концовки нет. Если порог за ${QDAYS} дней не набран, сезон просто продлевается.</p></div>${endCard}
+ <div class="card"><h2>Итоговая запись</h2><p class="hint">Все поля обязательны, кроме заметок в конце.</p>
+ <label for="fe">Насколько просто тебе теперь справляться со скучными делами?</label><p class="hint">1 — совсем никак, 10 — легко. На старте было: <b>${S.start.ease}</b></p>${slider('fe',E.ease??S.start.ease,0,10,!has)}
+ <label for="fn">Как ты себя чувствуешь сейчас?</label><p class="hint">1 — очень плохо, 10 — отлично</p>${slider('fn',E.now??5,1,10,!has)}
+ <h2 style="margin-top:18px">Дома</h2>
+ <label for="f1">Изменилось ли что-то в отношении родителей к тебе? Если да — что именно?</label><textarea id="f1">${esc(E.att)}</textarea>
+ <label for="f2">Как ты себя чувствуешь в отношениях с ними?</label><textarea id="f2">${esc(E.feel)}</textarea>
+ <label>Ссор стало…</label>${['меньше','так же','больше'].map(v=>`<label class="chk"><input type="radio" name="fq" value="${v}" ${q(v)}> ${v}</label>`).join('')}
+ <label for="f3">Как ты теперь реагируешь на слова, которые раньше раздражали?</label><textarea id="f3">${esc(E.words)}</textarea>
+ <label for="f4">Что помогало больше всего? Что мешало?</label><textarea id="f4">${esc(E.note)}</textarea>
+ <label for="f5">Заметки ${OPT}</label><p class="hint">Сюда можно вписать всё, что не вошло в вопросы выше.</p><textarea id="f5">${esc(E.extra)}</textarea>
+ <button class="pri" onclick="saveEnd()">${has?'Обновить запись':'Сохранить итоговую запись'}</button></div>
+ ${has?`<div class="card neon"><h2>Итог</h2><p>Лёгкость скучных дел: <b>${S.start.ease} → ${S.end.ease}</b> (${S.end.ease-S.start.ease>=0?'+':''}${S.end.ease-S.start.ease})</p><p>Настроение в финале: <b>${S.end.now??'—'}</b>/10</p></div>`:''}`;
+}
+function saveEnd(){const miss=[];
+ if(document.getElementById('fe').dataset.t!=='1')miss.push('оценка лёгкости дел');
+ if(document.getElementById('fn').dataset.t!=='1')miss.push('настроение');
+ [['f1','отношение родителей'],['f2','отношения с ними'],['f3','реакция на слова'],['f4','что помогало и мешало']].forEach(p=>{if(!val(p[0]))miss.push(p[1])});
+ const q=document.querySelector('[name=fq]:checked');if(!q)miss.push('ссоры');
+ if(miss.length){toast('Заполни обязательные поля: '+miss.join(', '),9000);return}
+ S.end={date:dayKey(Date.now()),ease:+val('fe'),now:+val('fn'),att:val('f1'),feel:val('f2'),quar:q.value,words:val('f3'),note:val('f4'),extra:val('f5')};save();toast('Итоговая запись сохранена.')}
+
+function more(){
+ const cs=S.cats.map(c=>{const ts=S.tasks.filter(t=>t.cat===c.id);return`<div class="card"><div class="row"><h2 style="flex:3;margin:0">${esc(c.icon)} ${esc(c.name)}</h2><button onclick="renameCat('${c.id}')" aria-label="Переименовать категорию">✎</button><button onclick="delCat('${c.id}')" aria-label="Удалить категорию">🗑</button></div>
+ ${ts.map(t=>`<div class="rowl"><span>${esc(t.icon||LV[t.lvl].e)} ${esc(t.name)} <span class="hint">${LV[t.lvl].n}</span></span><span><button class="x" onclick="openLvl('${t.id}')" aria-label="Название и сложность">⇅</button><button class="x" onclick="delTask('${t.id}')" aria-label="Удалить дело">🗑</button></span></div>`).join('')||'<p class="hint">Пока нет дел</p>'}</div>`}).join('');
+ const cl=S.lines.map((x,i)=>`<div class="rowl"><span><b>${who(x.who)}</b> · <span class="hint">${esc(CTXN[x.ctx]||x.ctx)}</span><br>${esc(x.text)}</span><button class="x" onclick="delLine(${i})" aria-label="Удалить реплику">🗑</button></div>`).join('')||'<p class="hint">Своих реплик пока нет.</p>';
+ const KN={log:'Запись о деле',task:'Дело',cat:'Категория',diary:'Запись дневника'};
+ const tr=[...S.trash].sort((a,b)=>b.ts-a.ts).map(t=>{const d=t.data;const nm=t.kind==='log'?(d.tname||'—')+' · '+fmt(d.ts):t.kind==='task'?d.name:t.kind==='cat'?d.cat.name+' ('+d.tasks.length+' дел)':d.text.slice(0,40);return`<div class="rowl"><span><span class="hint">${KN[t.kind]}</span><br>${esc(nm)}</span><span><button onclick="restore('${t.id}')">Вернуть</button><button class="x" onclick="purge('${t.id}')" aria-label="Удалить навсегда">✕</button></span></div>`}).join('')||'<p class="hint">Корзина пуста.</p>';
+ return`<h1>Ещё</h1><h2>Категории и дела</h2><p class="hint">⇅ у дела — изменить название и сложность.</p>${cs}<div class="row"><button onclick="openNewCat()">+ Категория</button><button onclick="openNewTask('${S.cats[0]?S.cats[0].id:''}')">+ Дело</button></div>
+ <h2 style="margin-top:22px">Реплики</h2><div class="card"><h3>Добавить свою реплику</h3><label for="lc">Когда звучит</label><select id="lc">${Object.keys(CTXN).map(k=>`<option value="${k}">${CTXN[k]}</option>`).join('')}</select><label for="lw">Кто говорит</label><select id="lw"><option value="l">Фея Муза</option><option value="t">Фея Текна</option></select><label for="lt">Текст</label><input type="text" id="lt" maxlength="200"><button class="pri" onclick="addLine()">Добавить</button><h3 style="margin-top:16px">Твои реплики</h3>${cl}</div>
+ <h2 style="margin-top:22px">Корзина</h2><div class="card">${tr}</div>
+ <h2 style="margin-top:22px">Данные</h2><div class="card"><p class="hint">Данные хранятся только в этом браузере. Скачай копию, особенно перед сменой телефона или очисткой браузера.${S.lastBackup?' Последняя копия: '+fmt(S.lastBackup)+'.':''}</p>
+ <div class="row"><button onclick="exp('json')">⬇ Копия (JSON)</button><button onclick="exp('csv')">⬇ Таблица (CSV)</button><button onclick="exp('txt')">⬇ Отчёт (TXT)</button></div>
+ <p class="hint">Если файл не скачался, откроется окно с текстом: его можно скопировать и сохранить в заметки или отправить сообщением.</p>
+ <label for="imp">Загрузить копию (JSON)</label><input type="file" id="imp" accept=".json,application/json" onchange="imp(this)">
+ <label for="impt">Или вставь текст копии</label><textarea id="impt" placeholder="Вставь сюда содержимое JSON-копии"></textarea><button style="width:100%;margin-top:8px" onclick="impText()">Загрузить из текста</button>
+ <button class="danger" style="width:100%;margin-top:16px" onclick="resetAll()">Стереть все данные</button></div>`;
+}
+function renameCat(id){const c=cat(id);modalCb=()=>{const n=val('mv');if(n){c.name=n.slice(0,40);S.logs.forEach(l=>{if(l.cat===id)l.cname=c.name});save()}};
+ modal(`<h2>Название категории</h2><input type="text" id="mv" maxlength="40" value="${esc(c.name)}"><div class="row" style="margin-top:12px"><button onclick="closeModal()">Отмена</button><button class="pri" style="margin:0;width:auto" onclick="modalOk()">Сохранить</button></div>`)}
+function delCat(id){const c=cat(id),ts=S.tasks.filter(t=>t.cat===id);
+ ask(ts.length?`Удалить категорию «${c.name}» вместе с делами (${ts.length})? Записи в журнале сохранятся. Всё можно вернуть из корзины.`:`Удалить категорию «${c.name}»? Её можно будет вернуть из корзины.`,'Удалить',()=>{
+  S.trash.push({id:uid(),kind:'cat',ts:Date.now(),data:{cat:c,tasks:ts}});S.tasks=S.tasks.filter(t=>t.cat!==id);S.cats=S.cats.filter(x=>x.id!==id);save();toast('Удалено. Вернуть можно в корзине.')},true)}
+function delTask(id){const t=task(id);ask(`Удалить дело «${t.name}» из списка? Записи в журнале сохранятся. Дело можно вернуть из корзины.`,'Удалить',()=>{
+ S.trash.push({id:uid(),kind:'task',ts:Date.now(),data:t});S.tasks=S.tasks.filter(x=>x.id!==id);save();toast('Удалено. Вернуть можно в корзине.')},true)}
+function restore(id){const t=S.trash.find(x=>x.id===id);if(!t)return;
+ if(t.kind==='log')S.logs.push(t.data);
+ if(t.kind==='diary')S.diary.push(t.data);
+ if(t.kind==='cat'){if(!cat(t.data.cat.id))S.cats.push(t.data.cat);t.data.tasks.forEach(x=>{if(!task(x.id))S.tasks.push(x)})}
+ if(t.kind==='task'){if(!cat(t.data.cat))S.cats.push({id:t.data.cat,name:'Восстановленная категория',icon:'📌'});if(!task(t.data.id))S.tasks.push(t.data)}
+ S.trash=S.trash.filter(x=>x.id!==id);save();toast('Возвращено')}
+function purge(id){ask('Удалить навсегда? Вернуть будет нельзя.','Удалить навсегда',()=>{S.trash=S.trash.filter(x=>x.id!==id);save()},true)}
+function resetAll(){ask('Стереть ВСЕ данные в приложении (записи, дневник, дела, достижения)? Сначала скачай копию.','Продолжить',()=>{ask('Точно стереть всё? Это нельзя отменить.','Стереть всё',()=>{try{localStorage.removeItem(KEY)}catch(e){}S=load();tab='dossier';save();toast('Данные стёрты')},true)},true)}
+function addLine(){const t=val('lt');if(!t){toast('Напиши текст реплики');return}S.lines.push({ctx:val('lc'),who:val('lw'),text:t});save();toast('Реплика добавлена')}
+function delLine(i){S.lines.splice(i,1);save()}
+
+function logLine(l){const t=new Date(l.ts).toLocaleTimeString('ru',{hour:'2-digit',minute:'2-digit'});
+ if(l.type==='rest')return`• ${t} — режим восстановления.`;
+ return`• ${t} — [${l.cname}] ${l.tname} (${LV[l.lvl].n}), ${l.min||0} мин.${l.want!=null?' Хотелось начать (до): '+l.want+'/10.':''}${l.resist!=null?' Не хотелось начинать (после): '+l.resist+'/10.':''}${l.after!=null?' Настроение после: '+l.after+'.':''} ${l.done?'Полностью':'Частично'}.${l.quick?' (запись постфактум)':''}${l.first?' Первый шаг: '+l.first+'.':''}${l.lecture?' Фон: '+l.lecture+'.':''}${(l.intr||[]).length?' Помехи: '+l.intr.join('; ')+'.':''}${l.note?' '+l.note:''}`}
+function dayLines(logs,base){const by={};logs.forEach(l=>(by[dayKey(l.ts)]??=[]).push(l));const r=[];
+ Object.keys(by).sort().forEach(k=>{r.push('',`ДЕНЬ ${Math.round((new Date(k)-new Date(base))/864e5)+1} — ${ruDate(k)} (записей: ${by[k].length})`);by[k].sort((a,b)=>a.ts-b.ts).forEach(l=>r.push(logLine(l)))});return r}
+function reportBase(){
+ const s=stats(),E=S.end,r=[`ДНЕВНИЧОК — «Дела без прокрастинации»`,`Имя: ${S.name||'—'}`,''];
+ if(S.start)r.push(`Старт: ${ruDate(S.start.date)}. Лёгкость скучных дел: ${S.start.ease}/10.${S.start.note?' '+S.start.note:''}`);
+ r.push(...dayLines(S.logs,baseDate()));
+ if(s.n)r.push('',`ИТОГО: ${s.n} дел за ${s.days} дн. Доведено до конца: ${s.full}%. Всего ${s.min} мин.${s.wntN?' Среднее настроение до дела: '+s.wnt.toFixed(1)+'/10.':''}${s.resN?' Средняя энергия до дела: '+s.res.toFixed(1)+'/10.':''}${s.aftN?' Среднее настроение после: '+s.aft.toFixed(1)+'.':''}`);
+ if(real().length)r.push(...dynLines());
+ const sosN=S.sos.length,sosY=S.sos.filter(x=>x.started).length;if(sosN)r.push('',`Кнопка «не могу начать»: ${sosN} раз(а), после неё начала: ${sosY}.`);
+ if(S.lvlHist.length)r.push('','СМЕНЫ СЛОЖНОСТИ:',...S.lvlHist.map(h=>`• ${ruDate(dayKey(h.ts))} — ${h.tname}: ${LV[h.from].n} → ${LV[h.to].n}`));
+ const got=ACH.filter(a=>S.ach[a.id]);if(got.length)r.push('','ДОСТИЖЕНИЯ: '+got.map(a=>a.n).join(', '));
+ const dr=[...S.diary].filter(d=>d.share).sort((a,b)=>a.ts-b.ts);if(dr.length)r.push('','ДНЕВНИК (только записи, включённые в отчёт):',...dr.map(d=>`• ${fmt(d.ts)} — ${d.text.replace(/\n+/g,' ')}`));
+ if(E&&S.start)r.push('','ФИНАЛ:',`Лёгкость скучных дел: ${S.start.ease} → ${E.ease}/10`,`Настроение в финале: ${E.now??'—'}/10`,`Мысли об эксперименте: ${E.thoughts||'—'}`,`Помогало/мешало: ${E.note||'—'}`,`Заметки: ${E.extra||'—'}`);
+ return r.join('\n');
+}
+function csv(){const H=['дата','время','день_сезона','неделя_сезона','тип','категория','дело','сложность','минуты','хочется_начать_до_1_10','не_хотелось_начинать_после_1_10','настроение_после','выполнено','помехи','первый_шаг','фон','заметка','запись_постфактум','xp'];
+ const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';const tm=l=>new Date(l.ts).toLocaleTimeString('ru',{hour:'2-digit',minute:'2-digit'});
+ const rows=[...S.logs].sort((a,b)=>a.ts-b.ts).map(l=>[dayKey(l.ts),tm(l),dayOf(l.ts),weekOf(l.ts),l.type||'task',l.cname,l.tname,l.lvl?LV[l.lvl].n:'',l.min||0,l.want??'',l.resist??'',l.after??'',l.done?1:0,(l.intr||[]).join(' | '),l.first,l.lecture,l.note,l.quick?1:0,xpOf(l)].map(q).join(';'));
+ return'\uFEFF'+[H.map(q).join(';'),...rows].join('\r\n')}
+
+/* ===== Выгрузка: скачивание + запасной вариант (копирование текста) ===== */
+function dl(n,t,type){
+ try{const blob=new Blob([t],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=n;a.rel='noopener';a.style.display='none';document.body.appendChild(a);a.click();setTimeout(()=>{try{a.remove();URL.revokeObjectURL(url)}catch(e){}},60000);return true}
+ catch(e){try{const a=document.createElement('a');a.href='data:'+type+','+encodeURIComponent(t);a.download=n;a.style.display='none';document.body.appendChild(a);a.click();a.remove();return true}catch(e2){return false}}}
+function showExport(name,text,ok){modal(`<h2>${esc(name)}</h2><p class="hint">${ok?'Скачивание запущено. Проверь «Загрузки».':'Скачать файл не получилось.'} Если файла нет — скопируй текст ниже и сохрани его в заметки или отправь сообщением.</p><textarea id="xt" readonly style="min-height:150px;font-size:.78rem">${esc(text)}</textarea><button class="pri" onclick="copyExport()">Скопировать текст</button><button class="ghost" style="width:100%;margin-top:8px" onclick="closeModal()">Закрыть</button>`)}
+function copyExport(){const ta=document.getElementById('xt');ta.focus();ta.select();try{ta.setSelectionRange(0,ta.value.length)}catch(e){}let ok=false;try{ok=document.execCommand('copy')}catch(e){}toast(ok?'Текст скопирован.':'Выдели текст вручную и скопируй.')}
+function exp(kind){XPM=xpMap();const d=dayKey(Date.now());
+ let n,t,type;
+ if(kind==='csv'){n='feechka-'+d+'.csv';t=csv();type='text/csv;charset=utf-8'}
+ if(kind==='txt'){n='otchet-'+d+'.txt';t=report();type='text/plain;charset=utf-8'}
+ if(kind==='json'){n='kopiya-feechka-'+d+'.json';t=JSON.stringify(S);type='application/json'}
+ const ok=dl(n,t,type);
+ if(kind==='json'){S.lastBackup=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+ showExport(n,t,ok)}
+function loadFrom(txt){let o;try{o=JSON.parse(txt);if(!o||!Array.isArray(o.logs)||o.v!==1)throw 0}catch(e){toast('Не получилось прочитать копию: нужен JSON из «Феечки»');return}
+ ask('Заменить текущие данные ('+S.logs.length+' записей) данными из копии ('+o.logs.length+')?','Заменить',()=>{S=fill(o);save();toast('Данные загружены')},true)}
+function imp(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>loadFrom(r.result);r.readAsText(f)}
+function impText(){const t=val('impt');if(!t){toast('Сначала вставь текст копии');return}loadFrom(t)}
+
+
+/* ================= ФЕЕЧКА ================= */
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){storageOk=false}}
+const unlocked=()=>(TEST&&S.testAll)||days().size>=FULL_AT;
+const sinceLast=()=>{const d=sortedDays();return d.length?gapDays(d[d.length-1],dayKey(Date.now())):0};
+const visCount=()=>{const n=Math.max(1,dayN());return n<=1?3:n===2?4:n===3?5:n<=5?7:QDAYS};
+const CL={};function cl(k){const kk=k+dayKey(Date.now());if(!CL[kk])CL[kk]=lineFrom(k);return qt(CL[kk])}
+const crOf=id=>id?S.cr.indexOf(id):-1;
+const pctOf=(a,f)=>a.length?Math.round(a.filter(f).length/a.length*100):0;
+function lockCard(t){const left=Math.max(0,FULL_AT-days().size);return`<div class="card lock"><h2>🔒 ${t}</h2><p class="hint">Откроется после тестового периода: ещё ${left} ${left===1?'день':'дн.'} с записями (достаточно одного дела или отметки плохого дня). Сейчас ${days().size} из ${FULL_AT}.</p></div>`}
+function crInfo(){const tk=dayKey(Date.now()),dn=real().filter(l=>l.done);
+ return[0,1,2].map(i=>{const c=S.cr[i],ls=c?dn.filter(l=>l.cat===c):[],td=ls.filter(l=>dayKey(l.ts)===tk).length;return{i,cat:c,today:td,lit:td>0,days:new Set(ls.map(l=>dayKey(l.ts))).size}})}
+function gem(i,filled,col,anim,cls){return`<svg viewBox="0 0 60 70" class="gem ${cls||''}" role="img" aria-label="Кристалл ${filled?'сияет':'спит'}"><defs><clipPath id="g${i}${anim?'a':''}"><path d="M30 4 L52 22 L44 62 L16 62 L8 22 Z"/></clipPath></defs><path d="M30 4 L52 22 L44 62 L16 62 L8 22 Z" fill="#f4eefc" stroke="${col}" stroke-width="2.5"/>${filled?`<g clip-path="url(#g${i}${anim?'a':''})"><rect class="${anim?'fillr':''}" x="0" y="4" width="60" height="58" fill="${col}" opacity=".85"/></g>`:''}<path d="M30 4 L30 62 M8 22 L52 22" stroke="#fff" stroke-width="1" opacity=".6"/></svg>`}
+function fx(col,bg,inner){const en=[8,22,38,54,70,86].map((x,k)=>`<span class="en" style="left:${x}%;animation-delay:${(k*.3+1).toFixed(1)}s"></span>`).join(''),tw=[[12,20],[78,14],[20,64],[82,60],[50,8]].map((p,k)=>`<span class="twk" style="left:${p[0]}%;top:${p[1]}%;animation-delay:${(k*.35).toFixed(2)}s">✦</span>`).join('');
+ return`<div class="celeb" style="--c:${col};--bgc:${bg}"><div class="ring"></div><div class="ring r2"></div>${en}${tw}${inner}</div>`}
+function celeb(i,first,n){const c=CRY[i].c;return fx(c,CRY[i].bg,gem(i,true,c,true,first?'':'ding'))+`<p style="text-align:center;margin:0"><b style="color:${c}">${CRY[i].n} ${first?'засиял!':'звенит ×'+n}</b></p>`}
+function crystalsCard(){const cs=crInfo();
+ return`<div class="card neon"><h2>💎 Кристаллы приоритетов</h2><p class="hint">Три кристалла — твой список приоритетов: номер 1 самый важный. Привяжи к каждому категорию. Одно выполненное дело из неё — и кристалл засияет. Дела из остальных категорий кристаллы не трогают.</p><div class="gems">${cs.map((c,i)=>{const ct=c.cat?cat(c.cat):null;
+  return`<div class="gemc ${c.lit?'lit':''}" style="--c:${CRY[i].c}">${gem(i,c.lit,CRY[i].c,false)}<div class="gn">${i+1}. ${CRY[i].n.split(' ')[0]}</div><div class="gs">${ct?esc(ct.icon+' '+ct.name):'<i>не назначена</i>'}</div><div class="gs">${c.lit?'✨ сияет сегодня'+(c.today>1?' ×'+c.today:''):'· спит'}</div><div class="gs">дней сияния: ${c.days}</div><button onclick="pickCry(${i})">${c.cat?'Сменить':'Назначить'}</button></div>`}).join('')}</div></div>`}
+function pickCry(i){modal(`<h2>${CRY[i].n} · приоритет ${i+1}</h2><label for="pc">Категория</label><select id="pc"><option value="">— не назначать —</option>${S.cats.map(c=>`<option value="${c.id}" ${S.cr[i]===c.id?'selected':''}>${esc(c.icon)} ${esc(c.name)}</option>`).join('')}</select><p class="hint">Дела этой категории будут зажигать именно этот кристалл. Прошлые записи остаются как были.</p><div class="row"><button onclick="closeModal()">Отмена</button><button class="pri" style="margin:0;width:auto" onclick="setCry(${i},val('pc'));closeModal()">Сохранить</button></div>`)}
+function setCry(i,id){S.cr=S.cr.map((c,j)=>(j!==i&&id&&c===id)?'':c);S.cr[i]=id;save()}
+function unlockNotes(){let h='';
+ if(!S.weekDone&&dayN()>=7&&S.logs.some(l=>dayKey(l.ts)===dayKey(Date.now()))){S.weekDone=true;h+=`<h3>🗺️ Тестовая неделя пройдена</h3>${qt(lineFrom('unlock_week'))}<p class="hint">Открыт доступ ко всему эксперименту в 30 дней.</p>`}
+ if(!S.featSeen&&days().size>=FULL_AT){S.featSeen=true;h+=`<h3>🔓 Полный функционал открыт</h3>${qt(lineFrom('unlock_feat'))}<p class="hint">Теперь доступны «Засечь момент», советы и тепловая карта в «Журнале».</p>`}
+ return h}
+function allHind(){const m={};real().forEach(l=>(l.intr||[]).forEach(t=>m[t]=(m[t]||0)+1));S.moments.forEach(x=>(x.hind||[]).forEach(t=>m[t]=(m[t]||0)+1));return Object.entries(m).sort((a,b)=>b[1]-a[1])}
+function adaptKey(){if(!S.start||!S.logs.length)return null;const n=dayN(),sl=sinceLast(),dd=days(),td=dd.has(dayKey(Date.now())),d=sortedDays();
+ if(!td&&sl>=7)return'ad_back_long';if(!td&&sl>=3)return'ad_back_short';
+ if(td&&d.length>=2&&gapDays(d[d.length-2],d[d.length-1])>=3)return'ad_back_do';
+ const s3=Object.keys(S.daily).sort().map(k=>S.daily[k]).filter(x=>x.sleep!=null).slice(-3);
+ if(s3.length>=3&&s3.every(x=>x.sleep<5))return'ad_sleep';
+ if(n>=2&&S.cr.some(c=>!c))return'ad_nocrystal';
+ const wk=[...Array(7)].filter((_,i)=>dd.has(dayKey(Date.now()-i*864e5))).length;
+ if(n>=8&&wk<=1)return'ad_dip';if(wk>=6)return'ad_steady';
+ const h=allHind()[0];if(h&&h[1]>=3&&unlocked())return'ad_hind';return null}
+let AD={k:'',line:null};
+function adaptLine(){const k=adaptKey();if(!k)return'';const key=k+'|'+dayKey(Date.now());if(AD.k!==key)AD={k:key,line:lineFrom(k)};return qt(AD.line)}
+const sleepResetH=()=>S.sleepReset??5;
+const sleepKey=()=>dayKey(Date.now()-sleepResetH()*36e5);
+const foodKey=()=>dayKey(Date.now()-sleepResetH()*36e5-864e5);
+const needSleep=()=>{if(!S.start)return false;const e=S.daily[sleepKey()];return!(e&&(e.sleep!=null||e.nosleep||e.skipS))};
+const needFood=()=>{if(!S.start||dayN()<2)return false;const e=S.daily[foodKey()];return!(e&&(e.food!=null||e.skipF))};
+const needDaily=()=>needSleep()||needFood();
+function dailyCard(){if(!needDaily())return'';const ns=needSleep(),nf=needFood();
+ return`<div class="card pulse"><h2>☀️ Утренняя отметка</h2><p><b>${ns&&nf?'Всего два пункта':'Всего один пункт'} — это очень быстро.</b></p>${cl('daily_intro')}
+ ${ns?`<label for="ds">Как бы ты оценила качество своего сна за сегодняшнее утро?</label><p class="hint">1 — очень плохое, 10 — отличное</p>${slider('ds',1,1,10,true)}<label class="chk"><input type="checkbox" id="dns" onchange="document.getElementById('ds').disabled=this.checked"> Не спала</label>`:''}
+ ${nf?`<label for="df">Оцени качество питания за вчера</label><p class="hint">1 — почти не ела или одни перекусы, 10 — регулярно и достаточно</p>${slider('df',1,1,10,true)}`:''}
+ <button class="pri" onclick="saveDaily()">Сохранить</button><button class="ghost" style="width:100%" onclick="skipDaily()">Пропустить сейчас</button></div>`}
+function saveDaily(){const ns=needSleep(),nf=needFood();let m='Записано. Спасибо!',no=false;
+ if(ns){no=document.getElementById('dns').checked;if(!no&&document.getElementById('ds').dataset.t!=='1'){toast('Подвинь ползунок сна или отметь «Не спала»');return}}
+ if(nf&&document.getElementById('df').dataset.t!=='1'){toast('Подвинь ползунок питания');return}
+ if(ns){const e=(S.daily[sleepKey()]??={});e.sleep=no?null:+val('ds');e.nosleep=no;e.ts=Date.now();if(no)m=sy(lineFrom('daily_nosleep'))}
+ if(nf){const e=(S.daily[foodKey()]??={});e.food=+val('df');e.ts=Date.now()}
+ save();toast(m)}
+function skipDaily(){if(needSleep())(S.daily[sleepKey()]??={}).skipS=true;if(needFood())(S.daily[foodKey()]??={}).skipF=true;save();toast('Хорошо, спросим в следующий раз.')}
+const dirActive=()=>S.dirs.find(d=>d.status==='active'&&d.until>Date.now());
+const dirPending=()=>S.dirs.find(d=>d.status==='active'&&d.until<=Date.now());
+function dirCd(){const e=S.dirs.filter(d=>d.endTs).map(d=>d.endTs),last=e.length?Math.max(...e):0,left=last+DIR_CD_H*36e5-Date.now();return left>0?left:0}
+const hrs=ms=>Math.ceil(ms/36e5)+' ч';
+const dirUnlocked=()=>(TEST&&S.testStages)||S.moments.length>=DIR_AT;
+function issueDir(a,b){modalCb=()=>{S.dirs.push({id:uid(),ts:Date.now(),ifT:a,thenT:b,until:Date.now()+DIR_H*36e5,status:'active',result:null,endTs:null});save();toast('Чары решимости выпущены 🔮')};
+ modal(`${qt(lineFrom('dir_confirm'))}<h2>🔮 Чары решимости</h2><p><b>Когда</b> ${esc(a)}, <b>я</b> ${esc(b)}.</p><p class="hint">Чары действуют ${DIR_H} часа и не меняются. Если выпустила по ошибке, отменить можно в течение ${DIR_UNDO_MIN} минут без последствий. Дальше — только досрочное завершение и пауза ${DIR_CD_H} ч перед новыми чарами.</p><p><b>Точно?</b></p><div class="row"><button onclick="closeModal()">Нет, ещё подумаю</button><button class="pri" style="margin:0;width:auto" onclick="modalOk()">Да, выпускаю</button></div>`)}
+function dirCancel(id){const d=S.dirs.find(x=>x.id===id);if(!d)return;
+ if(Date.now()-d.ts<=DIR_UNDO_MIN*6e4)ask('Отменить Чары как ошибочные? Пауза не включится.','Отменить чары',()=>{d.status='cancelled';const m=sy(lineFrom('dir_cancel'));save();toast(m)},true);
+ else ask('Завершить Чары досрочно? Включится пауза '+DIR_CD_H+' ч перед новыми.','Завершить',()=>{d.status='stopped';d.endTs=Date.now();save();toast('Чары завершены досрочно.')},true)}
+function dirResult(id,r){const d=S.dirs.find(x=>x.id===id);if(!d)return;d.status='done';d.result=r;d.endTs=d.until;save();toast('Записано. Это важные данные.')}
+function dirCard(){const a=dirActive(),p=dirPending();let h='';
+ if(p)h+=`<div class="card pulse"><h2>🔮 Чары закончились</h2><p>Когда ${esc(p.ifT)}, я ${esc(p.thenT)}.</p><p><b>Сработали?</b></p><div class="row"><button onclick="dirResult('${p.id}','yes')">Да</button><button onclick="dirResult('${p.id}','part')">Частично</button><button onclick="dirResult('${p.id}','no')">Нет</button></div></div>`;
+ if(a)h+=`<div class="card neon"><h2>🔮 Чары решимости действуют</h2><p><b>Когда</b> ${esc(a.ifT)}, <b>я</b> ${esc(a.thenT)}.</p><p class="hint">Осталось около ${hrs(a.until-Date.now())}.</p><button class="danger" style="width:100%" onclick="dirCancel('${a.id}')">${Date.now()-a.ts<=DIR_UNDO_MIN*6e4?'Отменить (выпустила по ошибке)':'Завершить досрочно'}</button></div>`;
+ return h}
+const RES={yes:'сработали',part:'частично',no:'не сработали'};
+function mStage(){if(TEST&&S.testStages)return MLV.length-1;const n=S.moments.length;let s=0;MLV.forEach((x,i)=>{if(n>=x.at)s=i});return s}
+function mSteps(){const st=MLV[mStage()].q.slice();if(dirUnlocked()&&!dirActive()&&!dirPending()&&!dirCd())st.push('dir');return st}
+function momentRoadmap(){const n=S.moments.length,st=mStage(),u=unlocked(),left=Math.max(0,FULL_AT-days().size),next=MLV[st+1],forced=TEST&&S.testStages;
+ const nodes=MLV.map((L,i)=>{const done=u&&i<st,cur=u&&i===st;return`<div class="node ${done?'dn':cur?'cur':'lk'}"><span class="nic">${done?'✅':cur?'➤':'🔒'}</span><div><b>${L.ic} Уровень ${i+1}: ${L.n}</b>${cur?' — ты здесь':''}<br><span class="hint">${i===0?'Старт.':'С '+L.at+' записей.'} ${L.open}</span></div></div>`}).join('');
+ const pct=u?Math.min(100,n/DIR_AT*100):0;
+ return`<div class="card neon"><h2>🔮 Путь к Чарам решимости</h2>
+ <p class="hint">Каждая записанная «засечка» — шаг по пути. За ${DIR_AT} записей ты получишь награду: Чары решимости.</p>
+ ${!u?`<p><b>Путь откроется после тестового периода:</b> ещё ${left} дн. с записями (сейчас ${days().size} из ${FULL_AT}). Но ты уже видишь, что тебя ждёт.</p>`:''}
+ <div class="bar bg2"><i style="width:${pct}%"></i></div>
+ <p class="mono">${!u?'ПУТЬ ПОКА ЗАКРЫТ':(n>=DIR_AT||forced)?'🎁 ЧАРЫ РЕШИМОСТИ ОТКРЫТЫ':`ЗАПИСЕЙ ${n} ИЗ ${DIR_AT} · ДО НАГРАДЫ ЕЩЁ ${DIR_AT-n}`}</p>
+ ${nodes}<div class="gb"><span class="gi">🔮</span><div><b>Награда: Чары решимости</b><br><span class="hint">твоя «директива»: заклинание «когда … я …» на ${DIR_H} часа. Открывается на уровне 3.</span></div></div>
+ ${u&&next&&!forced?`<p class="hint" style="margin-top:8px">До уровня ${st+2} «${next.n}» — ещё ${Math.max(0,next.at-n)} записей.</p>`:''}</div>`}
+function momentBlock(){
+ const st=mStage(),u=unlocked();
+ let go='';
+ if(u){const k=mSteps().filter(x=>x!=='dir').length;go=`${dirCard()}<div class="card"><h2>${MLV[st].ic} Уровень ${st+1}: ${MLV[st].n}</h2><p class="hint">Вопросов в записи: ${k}. Это меньше минуты. Это наблюдение, а не оценка.</p><button class="pri" onclick="S.active={kind:'moment',i:0,d:{}};save()">🔍 Засечь момент</button></div>`}
+ return`${momentRoadmap()}${go}
+ ${u?S.moments.slice().sort((a,b)=>b.ts-a.ts).slice(0,8).map(x=>`<div class="card"><div class="rowl" style="border:0;padding:0"><b>${esc(x.emo)} ${esc(x.tname)}</b><span class="hint">${fmt(x.ts)}</span></div><p class="hint">${esc(x.cname)} · ${BUCKETS[bucketOf(x.ts)]}${x.late?' · задним числом: '+esc(x.when):''}${x.hind&&x.hind.length?'<br>Мешало: '+esc(x.hind.join('; ')):''}${x.doing?'<br>Занималась: '+esc(x.doing):''}<br>Чувство: ${esc(x.emoName)}${x.int?' ('+x.int+'/5)':''}</p></div>`).join(''):''}
+ ${S.dirs.length?`<div class="card"><h3>Чары решимости</h3>${S.dirs.slice().sort((a,b)=>b.ts-a.ts).map(d=>`<div class="rowl"><span>Когда ${esc(d.ifT)}, я ${esc(d.thenT)}<br><span class="hint">${fmt(d.ts)} · ${d.status==='cancelled'?'отменены (ошибка)':d.status==='stopped'?'завершены досрочно':d.status==='done'?RES[d.result]:'действуют'}</span></span></div>`).join('')}</div>`:''}`}
+function momentTasks(sel){const c=document.getElementById('mc').value,t=document.getElementById('mt');t.innerHTML=S.tasks.filter(x=>x.cat===c).map(x=>`<option value="${x.id}" ${x.id===sel?'selected':''}>${esc(x.name)}</option>`).join('')||'<option value="">— в категории нет дел —</option>'}
+function pickEmoN(i){document.getElementById('me').value=i;document.querySelectorAll('#emb button').forEach((b,j)=>b.classList.toggle('on',j===i))}
+const MREQ={task:1,emo:1};
+function momentView(){const A=S.active,steps=mSteps(),cur=steps[A.i]||steps[0],d=A.d||{},last=A.i>=steps.length-1,st=mStage();
+ const dots=`<div class="dots">${steps.map((s,k)=>`<i class="${k===A.i?'on':k<A.i?'dn':''}"></i>`).join('')}</div>`;
+ let b='';
+ if(cur==='when')b=`<h2 class="big">Когда это было?</h2><select id="mw">${WHENS.map(w=>`<option value="${w[0]}" ${d.when===w[0]?'selected':''}>${w[1]}</option>`).join('')}</select><p class="hint">Примерно — это нормально.</p>`;
+ if(cur==='task')b=`<h2 class="big">Какое дело не получается сделать?</h2><select id="mc" onchange="momentTasks()">${catOpts(d.cat||(S.cats[0]&&S.cats[0].id))}</select><select id="mt" style="margin-top:6px"></select>`;
+ if(cur==='hind')b=`<h2 class="big">Что помешало?</h2>${hindUI('mh',d.hind||[])}`;
+ if(cur==='doing')b=`<h2 class="big">Чем ты занималась, когда поняла, что откладываешь?</h2>${DOING.map(s=>`<label class="chk"><input type="checkbox" name="md" value="${esc(s)}" ${(d.doing||[]).includes(s)?'checked':''}> ${esc(s)}</label>`).join('')}<input type="text" id="mdo" maxlength="120" placeholder="Другое — своими словами" value="${esc(d.doingO||'')}">`;
+ if(cur==='emo')b=`<h2 class="big">Что ты почувствовала?</h2><input type="hidden" id="me" value="${d.emo??''}"><div class="emb" id="emb">${EMOS.map((e,i)=>`<button type="button" class="${d.emo===i?'on':''}" onclick="pickEmoN(${i})">${e[0]}<br>${e[1]}</button>`).join('')}</div><p class="hint">Можно выбрать «не знаю» — это тоже ответ.</p>`;
+ if(cur==='int')b=`<h2 class="big">Насколько сильно?</h2><p class="hint">1 — слабо, 5 — очень сильно</p>${slider('mi',d.int||1,1,5)}`;
+ if(cur==='dir')b=`<div class="gb" style="margin:0 0 10px"><span class="gi">🔮</span><div><b>Награда: Чары решимости!</b><br><span class="hint">Ты это заслужила своей наблюдательностью.</span></div></div><p class="hint">Придумай заклинание на ${DIR_H} часа. Например: «когда хочу залипнуть в телефоне, я встаю и мою одну чашку». Можно пропустить и выпустить позже.</p><label for="dif">Когда…</label><input type="text" id="dif" maxlength="100" placeholder="например: хочу залипнуть в телефоне" value="${esc(d.dif||'')}"><label for="dth">…я</label><input type="text" id="dth" maxlength="100" placeholder="например: встаю и мою одну чашку" value="${esc(d.dth||'')}"><p class="hint">Потом приложение спросит «Точно?».</p>`;
+ const skip=!MREQ[cur]?`<button class="ghost" style="width:100%" onclick="momentGo(1,true)">Пропустить</button>`:'';
+ return`<p class="mono">${MLV[st].ic} УРОВЕНЬ ${st+1} · ${MLV[st].n.toUpperCase()} · ШАГ ${A.i+1} ИЗ ${steps.length}</p>${dots}${A.i===0?qt(lineFrom('moment_intro')):''}<div class="card">${b}<button class="pri" onclick="momentGo(1)">${last?(cur==='dir'?'🔮 Выпустить чары':'Записать'):'Дальше'}</button>${skip}${A.i>0?`<button class="ghost" style="width:100%" onclick="momentGo(-1)">← Назад</button>`:''}</div>`}
+function momentCollect(cur){const A=S.active,d=A.d;
+ if(cur==='when')d.when=val('mw');
+ if(cur==='task'){d.cat=val('mc');d.task=val('mt')}
+ if(cur==='hind')d.hind=hindChecked('mh');
+ if(cur==='doing'){d.doing=[...document.querySelectorAll('[name=md]:checked')].map(c=>c.value);d.doingO=val('mdo')}
+ if(cur==='emo'){const v=document.getElementById('me').value;d.emo=v===''?undefined:+v}
+ if(cur==='int'){const s=document.getElementById('mi');d.int=s.dataset.t==='1'?+s.value:d.int}
+ if(cur==='dir'){d.dif=val('dif');d.dth=val('dth')}}
+function momentGo(dir,skip){const A=S.active,steps=mSteps(),cur=steps[A.i];
+ if(!skip||dir<0)momentCollect(cur);
+ if(dir>0&&!skip){if(cur==='task'&&!task(A.d.task)){toast('Выбери дело');return}if(cur==='emo'&&A.d.emo===undefined){toast('Выбери, что ты почувствовала (можно «не знаю»)');return}}
+ if(dir>0&&A.i>=steps.length-1){saveMoment();return}
+ A.i=Math.max(0,A.i+dir);save();scrollTo(0,0)}
+function saveMoment(){const A=S.active,d=A.d;
+ const t=task(d.task);if(!t){toast('Нужно выбрать дело — вернись на шаг «Какое дело»');A.i=0;save();return}
+ if(d.emo===undefined){toast('Нужно выбрать чувство');return}
+ const w=d.when||'0';let ts=Date.now();const late=w!=='0';
+ if(/^\d+$/.test(w))ts-=+w*6e4;else if(w==='m'){const x=new Date();x.setHours(9,0,0,0);ts=Math.min(ts,x.getTime())}else if(w==='y')ts-=864e5;
+ const doing=[...(d.doing||[])];if(d.doingO)doing.push(d.doingO);const e=EMOS[d.emo],c=cat(t.cat)||{name:'—'};
+ S.moments.push({id:uid(),ts,late,when:(WHENS.find(x=>x[0]===w)||[0,''])[1],task:t.id,tname:t.name,cat:t.cat,cname:c.name,hind:d.hind||[],doing:doing.join('; '),emo:e[0],emoName:e[1],int:d.int||null});
+ const n=S.moments.length,a=(d.dif||'').trim(),b=(d.dth||'').trim();S.active=null;jtab='diary';tab='journal';
+ const h=save({hold:true});
+ const lvUp=MLV.find(L=>L.at===n&&L.at>0),dirNow=n===DIR_AT;
+ const nx=MLV.find(L=>L.at>n),bar=`<div class="bar bg2"><i style="width:${Math.min(100,n/DIR_AT*100)}%"></i></div><p class="hint">${n<DIR_AT?`Записей ${n} из ${DIR_AT}. До Чар решимости ещё ${DIR_AT-n}.`:nx?`Записей ${n}. До уровня «${nx.n}» ещё ${nx.at-n}.`:'Ты на высшем уровне!'}</p>`;
+ const cel=(lvUp||dirNow)?fx('#8a5cf0','#f1ecff',`<span class="em">${dirNow?'🔮':lvUp.ic}</span>`):'';
+ const lvTxt=lvUp?`<h3>🆙 Уровень ${MLV.indexOf(lvUp)+1}: ${lvUp.n}</h3><p class="hint">${lvUp.open}</p>`:'';
+ const drTxt=dirNow?`<h3>🎁 Награда: Чары решимости</h3><p class="hint">В следующей записи в конце можно будет выпустить свои чары.</p>`:'';
+ const phrase=dirNow?qt(lineFrom('dir_unlock')):lvUp?qt(lineFrom('level_up')):qt(lineFrom('moment_saved'));
+ const afterModal=()=>modal(`<h2>Момент записан</h2>${cel}${phrase}${bar}${lvTxt}${drTxt}${(a||b)&&!(a&&b)?'<p class="hint">Чары не выпущены: нужны обе части.</p>':''}${achBlock(h)}<button class="pri" onclick="closeModal()">Ок</button>`);
+ if(a&&b&&dirUnlocked()&&!dirActive()&&!dirCd()){issueDir(a,b)}else afterModal()}
+function hindList(ns,sel){return S.hind.map(s=>`<label class="chk"><input type="checkbox" name="${ns}" value="${esc(s)}" ${sel.includes(s)?'checked':''}> ${esc(s)}</label>`).join('')||'<p class="hint">Список пуст: добавь свой вариант ниже.</p>'}
+function hindUI(ns,sel){return`<div id="${ns}-w">${hindList(ns,sel||[])}</div><div class="row" style="margin-top:6px"><input type="text" id="${ns}-o" maxlength="80" placeholder="Другое — своими словами" style="flex:3"><button type="button" onclick="hindAdd('${ns}')" style="flex:1">💾 В список</button></div><p class="hint">«💾 В список» запомнит вариант везде, где выбираешь помехи. Изменить или удалить его можно в «Ещё». Если просто напишешь и не нажмёшь кнопку, вариант запишется только сюда.</p>`}
+function hindChecked(ns,pending){const r=[...document.querySelectorAll(`[name="${ns}"]:checked`)].map(c=>c.value);const p=pending===false?'':val(ns+'-o');if(p&&!r.includes(p))r.push(p);return r}
+function hindAdd(ns){const t=val(ns+'-o').slice(0,80);if(!t){toast('Сначала напиши, что мешало');return}const sel=hindChecked(ns,false);if(!S.hind.includes(t))S.hind.push(t);sel.push(t);persist();document.getElementById(ns+'-w').innerHTML=hindList(ns,sel);document.getElementById(ns+'-o').value='';toast('Сохранено в список')}
+function renameHind(i){modalCb=()=>{const n=val('mv').slice(0,80);if(n){S.hind[i]=n;save()}};modal(`<h2>Помеха</h2><input type="text" id="mv" maxlength="80" value="${esc(S.hind[i])}"><p class="hint">В старых записях текст останется как был.</p><div class="row" style="margin-top:12px"><button onclick="closeModal()">Отмена</button><button class="pri" style="margin:0;width:auto" onclick="modalOk()">Сохранить</button></div>`)}
+function delHind(i){ask('Убрать эту помеху из списка выбора? В старых записях она сохранится.','Убрать',()=>{S.hind.splice(i,1);save()},true)}
+function addHind(){const t=val('nh').slice(0,80);if(!t){toast('Напиши текст помехи');return}if(!S.hind.includes(t))S.hind.push(t);save()}
+
+function insights(){const R=real(),out=[],A=R.filter(l=>l.after!=null);
+ const ent=l=>S.daily[dayKey(l.ts)]||null;
+ [['сон был','сна','режиму сна',e=>e.nosleep?null:e.sleep],['питание было','питания','регулярности питания',e=>e.food]].forEach(([v1,g,adv,fn])=>{
+  const lo=[],hi=[];R.forEach(l=>{const e=ent(l);if(!e)return;const v=fn(e);if(v==null)return;(v<5?lo:hi).push(l)});
+  if(lo.length>=4&&hi.length>=4){const dl=pctOf(lo,l=>l.done),dh=pctOf(hi,l=>l.done);
+   if(dh-dl>=20)out.push(`Замечено: когда ${v1} ниже 5 баллов, дела доводились до конца в ${dl}% случаев, при 5 и выше — в ${dh}%. Возможно, стоит присмотреться к ${adv} и проверить это ещё неделю-две.`);
+   const al=avgOf(lo,'after'),ah=avgOf(hi,'after');if(al!=null&&ah!=null&&ah-al>=1.5)out.push(`После низких оценок ${g} настроение после дел в среднем ${al.toFixed(1)}, при нормальных — ${ah.toFixed(1)}.`)}});
+ [['en0'],['mood0']].forEach(([k])=>{const lo=R.filter(l=>l[k]!=null&&l[k]<=4),hi=R.filter(l=>l[k]!=null&&l[k]>=5);
+  if(lo.length>=4&&hi.length>=4){const a=pctOf(lo,l=>l.done),b=pctOf(hi,l=>l.done);if(b-a>=20)out.push(`Когда ${k==='en0'?'энергия':'настроение'} перед делом было 4 и ниже, дела доводились до конца в ${a}% случаев, при 5 и выше — в ${b}%. Возможно, самые тяжёлые дела лучше ставить на время, когда ${k==='en0'?'сил':'настроения'} больше.`)}});
+ const MD=R.filter(l=>l.mood0!=null&&l.after!=null);if(MD.length>=6){const d=avg(MD.map(l=>l.after-l.mood0));if(d>=1)out.push(`После дел настроение в среднем выше на ${d.toFixed(1)} балла, чем перед ними. Дело нередко «разгоняет», а не выматывает.`);else if(d<=-1)out.push(`После дел настроение в среднем ниже на ${Math.abs(d).toFixed(1)} балла. Возможно, после дел нужны небольшие паузы.`)}
+ const FT=R.filter(l=>l.fat1!=null);if(FT.length>=6){const f=avg(FT.map(l=>l.fat1));if(f>=7)out.push(`После дел усталость в среднем высокая (${f.toFixed(1)} из 10). Возможно, стоит делить дела на части и делать паузы.`)}
+ const bk=[0,1,2,3].map(i=>A.filter(l=>bucketOf(l.ts)===i)),ok=bk.map((b,i)=>b.length>=4?[i,avgOf(b,'after')]:null).filter(Boolean);
+ if(ok.length>=2){ok.sort((a,b)=>b[1]-a[1]);const b=ok[0],w=ok[ok.length-1];if(b[1]-w[1]>=1.5)out.push(`Настроение после дел выше всего в период «${BUCKETS[b[0]]}» (${b[1].toFixed(1)}) и ниже в период «${BUCKETS[w[0]]}» (${w[1].toFixed(1)}). Возможно, сложные дела лучше ставить на удачное время.`)}
+ const sh=A.filter(l=>l.min>0&&l.min<=15),lg=A.filter(l=>l.min>15);
+ if(sh.length>=4&&lg.length>=4){const a=avgOf(sh,'after'),b=avgOf(lg,'after');if(Math.abs(a-b)>=1)out.push(a>b?`После коротких дел (до 15 минут) настроение выше: ${a.toFixed(1)} против ${b.toFixed(1)} после длинных. Возможно, длинные дела лучше делить на части.`:`После длинных дел настроение выше, чем после коротких (${b.toFixed(1)} против ${a.toFixed(1)}). Когда втягиваешься, результат хороший.`)}
+ const h=allHind()[0];if(h&&h[1]>=3)out.push(`Чаще всего мешало: «${h[0]}» (${h[1]} раз). Возможно, на это стоит придумать отдельные Чары решимости.`);
+ if(S.moments.length>=3){const bc=[0,0,0,0];S.moments.forEach(x=>bc[bucketOf(x.ts)]++);const mx=Math.max(...bc),i=bc.indexOf(mx);if(mx/S.moments.length>=.4)out.push(`Откладывание чаще всего случается в период «${BUCKETS[i]}» (${mx} из ${S.moments.length} отмеченных моментов).`);
+  const cc={};S.moments.forEach(x=>cc[x.cname]=(cc[x.cname]||0)+1);const t=Object.entries(cc).sort((a,b)=>b[1]-a[1])[0];if(t[1]>=3)out.push(`Больше всего моментов откладывания связано с категорией «${t[0]}» (${t[1]}).`);
+  const em={};S.moments.forEach(x=>em[x.emoName]=(em[x.emoName]||0)+1);const te=Object.entries(em).sort((a,b)=>b[1]-a[1])[0];if(te[1]>=3&&te[0]!=='не знаю')out.push(`Чаще всего в момент откладывания отмечено чувство «${te[0]}» (${te[1]} раз).`)}
+ const dn=S.dirs.filter(d=>d.status==='done');if(dn.length>=1)out.push(`Чар решимости отмечено: ${dn.length}. Сработали: ${dn.filter(d=>d.result==='yes').length}, частично: ${dn.filter(d=>d.result==='part').length}, не сработали: ${dn.filter(d=>d.result==='no').length}.`);
+ return out}
+function dayAvg(k,f){return avgOf(real().filter(l=>dayKey(l.ts)===k),f)}
+let CHOFF={en0:true,fat1:true};
+function chartCard(){const ks=[...Array(14)].map((_,i)=>dayKey(Date.now()-(13-i)*864e5));
+ const ser=[{id:'mood0',n:'Настроение до',c:'#ff4fb0',v:ks.map(k=>dayAvg(k,'mood0'))},{id:'after',n:'Настроение после',c:'#12a6c9',v:ks.map(k=>dayAvg(k,'after'))},{id:'sleep',n:'Сон',c:'#8a5cf0',v:ks.map(k=>{const e=S.daily[k];return e&&e.sleep!=null?e.sleep:null})},{id:'food',n:'Питание',c:'#f0a020',v:ks.map(k=>{const e=S.daily[k];return e&&e.food!=null?e.food:null})},{id:'en0',n:'Энергия до',c:'#2ecc71',v:ks.map(k=>dayAvg(k,'en0'))},{id:'fat1',n:'Усталость после',c:'#7a6a9f',dash:1,v:ks.map(k=>dayAvg(k,'fat1'))}];
+ const W=320,H=170,L=24,B=22,T=8,x=i=>L+i*(W-L-8)/13,y=v=>T+(1-(v-1)/9)*(H-B-T);
+ let g='';[1,5,10].forEach(v=>g+=`<line x1="${L}" x2="${W-8}" y1="${y(v)}" y2="${y(v)}" stroke="#eadcf3" stroke-width="1"/><text x="2" y="${y(v)+4}" font-size="10" fill="#7a6a9f">${v}</text>`);
+ ks.forEach((k,i)=>{if(i%3===0||i===13)g+=`<text x="${x(i)}" y="${H-6}" font-size="9" text-anchor="middle" fill="#7a6a9f">${k.slice(8)}.${k.slice(5,7)}</text>`});
+ ser.filter(s=>!CHOFF[s.id]).forEach(s=>{let seg=[];const flush=()=>{if(seg.length>1)g+=`<polyline fill="none" stroke="${s.c}" stroke-width="2.2" ${s.dash?'stroke-dasharray="5 4"':''} points="${seg.map(p=>p.join(',')).join(' ')}"/>`;seg=[]};
+  s.v.forEach((v,i)=>{if(v==null){flush();return}seg.push([x(i).toFixed(1),y(v).toFixed(1)])});flush();
+  s.v.forEach((v,i)=>{if(v!=null)g+=`<circle cx="${x(i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="3" fill="${s.c}"/>`})});
+ return`<div class="card"><h2>Как идут дела: 14 дней</h2><div class="lg">${ser.map(s=>`<button style="${CHOFF[s.id]?'':'border-color:'+s.c+';color:'+s.c+';font-weight:700'}" onclick="CHOFF['${s.id}']=!CHOFF['${s.id}'];render()">${s.n}</button>`).join('')}</div>
+ <svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="График за 14 дней">${g}</svg>
+ <p class="hint">Шкала везде от 1 до 10. У настроения, сна, питания и энергии выше значит лучше. У пунктирной линии усталости выше значит сильнее устала. Точки есть только в дни, когда были данные. Нажми на название, чтобы показать или скрыть линию.</p></div>`}
+function heatCard(){
+ if(!unlocked())return lockCard('Когда и почему откладываешь');
+ const M=S.moments;if(M.length<5)return`<div class="card"><h2>Когда и почему откладываешь</h2><p class="hint">Данных пока мало: ${M.length} из 5 моментов. После пятой записи здесь появится таблица по времени суток, причинам и категориям. Записывай через «Журнал → Дневник → Засечь момент».</p></div>`;
+ const tbl=(title,rows)=>{const mx=Math.max(1,...rows.flatMap(r=>r[1]));return`<h3>${title}</h3><div style="overflow-x:auto"><table class="hm"><tr><th></th>${BUCKETS.map(b=>`<th>${b}</th>`).join('')}<th>всего</th></tr>${rows.map(r=>`<tr><td>${esc(r[0])}</td>${r[1].map(n=>`<td style="background:rgba(255,79,176,${n?(.12+.55*n/mx).toFixed(2):0})">${n||'·'}</td>`).join('')}<td><b>${r[1].reduce((a,b)=>a+b,0)}</b></td></tr>`).join('')}</table></div>`};
+ const byC={},byH={};M.forEach(x=>{const b=bucketOf(x.ts);(byC[x.cname]??=[0,0,0,0])[b]++;(x.hind&&x.hind.length?x.hind:['(не указано)']).forEach(h=>{(byH[h]??=[0,0,0,0])[b]++})});
+ const tot=[0,0,0,0];M.forEach(x=>tot[bucketOf(x.ts)]++);const mx=Math.max(...tot);
+ return`<div class="card"><h2>Когда и почему откладываешь</h2><p class="hint">Всего моментов: ${M.length}. Чаще всего: ${BUCKETS[tot.indexOf(mx)].toLowerCase()} (${mx}).</p><div class="wk">${tot.map((n,i)=>`<div class="wc"><span class="v">${n||''}</span><i class="${n?'':'z'}" style="height:${n?Math.max(10,Math.round(n/mx*70)):3}px"></i><span>${BUCKETS[i]}</span></div>`).join('')}</div>${tbl('По причинам',Object.entries(byH).sort((a,b)=>b[1].reduce((x,y)=>x+y)-a[1].reduce((x,y)=>x+y)).slice(0,8))}${tbl('По категориям',Object.entries(byC))}<p class="hint">Чем розовее клетка, тем чаще. Это наблюдения за ограниченным числом записей, не выводы.</p></div>`}
+function summary(){
+ const ks=[...Array(7)].map((_,i)=>dayKey(Date.now()-i*864e5)),L=real().filter(l=>ks.includes(dayKey(l.ts)));
+ const xp=S.logs.filter(l=>ks.includes(dayKey(l.ts))).reduce((s,l)=>s+xpOf(l),0),ds=new Set(S.logs.filter(l=>ks.includes(dayKey(l.ts))).map(l=>dayKey(l.ts))).size;
+ const sv=ks.map(k=>S.daily[k]&&S.daily[k].sleep).filter(v=>v!=null),fv=ks.map(k=>S.daily[k]&&S.daily[k].food).filter(v=>v!=null);
+ const f1_=k=>{const v=avgOf(L,k);return v==null?'—':v.toFixed(1)};
+ const stats=`<div class="card"><h2>Последние 7 дней</h2><div class="stats"><div><b>${L.length}</b>дел записано</div><div><b>${ds}</b>дней с записями</div><div><b>${xp}</b>опыта</div><div><b>${f1_('mood0')} → ${f1_('after')}</b>настроение до → после</div><div><b>${f1_('en0')}</b>энергия перед делом</div><div><b>${f1_('fat1')}</b>усталость после дела</div><div><b>${sv.length?avg(sv).toFixed(1):'—'}</b>сон</div><div><b>${fv.length?avg(fv).toFixed(1):'—'}</b>питание</div></div></div>`;
+ let adv='';if(!unlocked())adv=lockCard('Советы и закономерности');
+ else{const ins=insights();adv=`<div class="card"><h2>💡 Наблюдения</h2>${ins.length?ins.map(t=>`<div class="adv">${esc(t)}</div>`).join(''):'<p class="hint">Пока недостаточно данных: для наблюдения нужно хотя бы по 4 записи в каждой сравниваемой группе (например, дни с плохим и с нормальным сном). Продолжай записывать.</p>'}<p class="hint">Это закономерности в твоих записях, а не диагноз и не причина. Если что-то тревожит, обсуди с психологом.</p></div>`}
+ const hc=allHind().slice(0,6),mxh=Math.max(1,...hc.map(x=>x[1]));
+ const hb=hc.length?`<div class="card"><h2>Что мешает чаще всего</h2>${hc.map(x=>`<div class="rowl"><span style="flex:1">${esc(x[0])}</span><span class="hint">${x[1]}</span></div><div class="bar"><i style="width:${x[1]/mxh*100}%"></i></div>`).join('')}</div>`:'';
+ return(S.logs.length?'':'<div class="card">Пока пусто. Первое дело — во вкладке «Задания».</div>')+dailyCard()+stats+chartCard()+adv+heatCard()+hb+'<p class="hint">Подробности: «Дела» — таблица записей, «История» — по дням, «Направления» — недели по категориям.</p>'}
+function calendar(){const n=Math.max(1,dayN()),vis=visCount(),dd=days(),d0=new Date(baseDate());
+ const cells=[...Array(QDAYS)].map((_,i)=>{const k=dayKey(d0.getTime()+i*864e5+12*36e5);let cls=dd.has(k)?'on':'',txt=i+1;if(i+1===n)cls+=' now';if(i>=vis){cls+=' hid';txt='·'}else if(i>=7&&!S.weekDone)cls+=' fog';return`<span class="${cls}">${txt}</span>`}).join('');
+ return`<div class="card"><h2>Сезон</h2><div class="month">${cells}</div><p class="hint">${vis<QDAYS?`Открыто дней: ${vis}. Остальные откроются позже.`:S.weekDone?'Все 30 дней открыты.':'Дни после седьмого пока в дымке. Они откроются, когда ты завершишь тестовую неделю: сделай дело или отметь плохой день в седьмой день.'}</p></div>`}
+function questMap(){const du=Object.values(S.daily).filter(x=>x.sleep!=null||x.nosleep||x.food!=null).length,u=unlocked(),left=Math.max(0,FULL_AT-days().size),mn=S.moments.length,st=mStage();
+ const row=(ic,t,p,ok,lk)=>`<div class="hl ${lk?'lock':''}"><span class="e">${lk?'🔒':ic}</span><span><b>${t}</b>${ok?' ✅':''}<br><span class="hint">${p}</span></span></div>`;
+ return`<div class="card"><h2>🗺️ Карта открытий</h2>
+ ${row('🗺️','Тестовая неделя',S.weekDone?'пройдена, календарь на 30 дней открыт':'дело или плохой день в седьмой день',S.weekDone)}
+ ${row('🔍','Засечь момент',u?`уровень ${st+1} из ${MLV.length}: ${MLV[st].n} · записей: ${mn}`:`путь откроется через ${left} дн. с записями`,false,!u)}
+ ${row('🔮','Чары решимости (директива)',!u?`откроются после ${DIR_AT} засечённых моментов`:dirUnlocked()?`выпущено: ${S.dirs.filter(d=>d.status!=='cancelled').length}`:`награда за ${DIR_AT} засечённых моментов (сейчас ${mn})`,false,!u||!dirUnlocked())}
+ ${row('💡','Советы по твоим записям',u?'«Журнал → Сводка»':`откроется через ${left} дн. с записями`,false,!u)}
+ ${row('😴','Лаборатория сна',`${Math.min(7,du)} из 7 отметок`,du>=7)}
+ <button class="ghost" style="width:100%;margin-top:6px" onclick="tab='journal';jtab='diary';render();scrollTo(0,0)">Открыть путь «Засечь момент» →</button></div>`}
+function achGrid(){return`<div class="card"><h2>Достижения ${ACH.filter(a=>S.ach[a.id]).length}/${ACH.length}</h2><div class="badges">${ACH.map(a=>{const on=!!S.ach[a.id];return`<div class="badge ${on?'on':''}"><b>${on||!a.hid?a.ic:'❔'} ${on||!a.hid?esc(a.n):'???'} · +${a.xp}</b>${on||!a.hid?esc(a.d):'скрытое достижение'}</div>`}).join('')}</div></div>`}
+function flagged(){return S.logs.filter(l=>l.type!=='rest'&&l.min>=LONG_MIN&&!l.fixed)}
+function dossier(){
+ if(!S.start)return dossierOld();
+ const x=total(),nr=nextRank(x),n=dayN(),st=stage(),ad=days().size;
+ const cs={};real().forEach(l=>{const c=cs[l.cat]||(cs[l.cat]={name:(cat(l.cat)||{name:l.cname}).name,icon:(cat(l.cat)||{icon:'📌'}).icon,xp:0,n:0});c.xp+=xpOf(l);c.n++});
+ const chips=Object.values(cs).map(c=>`<span class="chip">${esc(c.icon)} ${esc(c.name)} — ${c.xp} XP · ${c.n}</span>`).join('')||'<span class="hint">Пока нет записей.</span>';
+ const bk=S.logs.length>=3&&(!S.lastBackup||Date.now()-S.lastBackup>5*864e5)?'<div class="card"><b>Копия данных.</b> <span class="hint">Сделай резервную копию: «Ещё» → «Данные». Если очистится браузер или удалится значок, записи пропадут.</span></div>':'';
+ const flc=flagged().length?`<div class="card"><b>⚠️ Есть запись длиннее ${LONG_MIN/60} часов.</b> <span class="hint">Возможно, забыла нажать «Стоп». Исправить можно в «Ещё» → «Неверно внесённое время».</span></div>`:'';
+ const lockB=ad<FULL_AT&&!(TEST&&S.testAll)?`<div class="card neon"><h2>🌱 Тестовый период</h2><div class="bar"><i style="width:${Math.min(100,ad/FULL_AT*100)}%"></i></div><p class="hint">Дней с записями: ${ad} из ${FULL_AT}. После этого откроются «Засечь момент», советы и тепловая карта. «Ещё» доступно уже сейчас.</p></div>`:'';
+ const rested=S.logs.some(l=>l.type==='rest'&&dayKey(l.ts)===dayKey(Date.now()));
+ const restCard=rested?`<div class="card"><p>🌙 Сегодня отмечен плохой день.</p><button class="danger" style="width:100%" onclick="cancelRest()">Отменить режим плохого дня</button></div>`:`<div class="card"><button style="width:100%" onclick="restDay()">🌙 Плохой день — режим восстановления</button><p class="hint">Засчитывается как день сезона и даёт немного опыта. Без отчёта.</p></div>`;
+ const act=dirActive(),dp=dirPending();
+ const dirB=act?`<div class="card neon"><b>🔮 Чары решимости:</b> когда ${esc(act.ifT)}, я ${esc(act.thenT)}. <span class="hint">Осталось около ${hrs(act.until-Date.now())}.</span></div>`:dp?dirCard():'';
+ return`<h1>Привет, ${esc(S.name||'фея')}</h1><p class="mono">ДЕНЬ ${Math.max(1,n)} ИЗ ${QDAYS} · СТАРТ ${ruDate(baseDate())}</p>
+ ${dailyCard()}${flc}${adaptLine()}${lockB}${dirB}
+ <div class="card neon"><div class="mono">НЕДЕЛЯ ${Math.min(st,4)}${st===5?' · СРОК ВЫШЕЛ':''}</div>${BRIEF[st].map(p=>qt(p)).join('')}</div>
+ <div class="card neon top">${orb(x/GOAL)}<div style="flex:1"><div class="mono">ЗВАНИЕ</div><h2 style="color:var(--pink)">${rank(x)}</h2><div class="mono">МАГИЯ: ${x} / ${GOAL} XP</div><div class="bar"><i style="width:${Math.min(100,x/GOAL*100)}%"></i></div><p class="hint">${nr?`До «${nr[1]}» — ${nr[0]-x} XP`:'Сосуд полон. Магия на месте.'}</p></div></div>
+ ${crystalsCard()}${bk}${calendar()}${questMap()}
+ <div class="card"><h2>Направления</h2><div class="chips">${chips}</div><button class="ghost" style="width:100%;margin-top:6px" onclick="tab='journal';jtab='dyn';render();scrollTo(0,0)">Смотреть динамику по направлениям →</button></div>
+ ${restCard}${achGrid()}
+ <div class="card"><p class="hint">Опыт за дело: ${[1,2,3].map(i=>LV[i].n+' '+LV[i].xp).join(' · ')}. Не доделала — половина. Первое дело дня +3. Повтор того же дела за день — половина, третий раз и далее по 2. С дел не больше ${DAYCAP} XP в день; сверх лимита даётся 10% опыта (минимум 1). Достижения дают разовый опыт.</p></div>`}
+function toggleCat(id){S.collapsed[id]=!S.collapsed[id];persist();render()}
+function tasks(){
+ if(!S.start)return`<h1>Задания</h1><div class="card">Сначала заполни первую запись на главном экране.</div>`;
+ const td=dayKey(Date.now()),dn={};S.logs.forEach(l=>{if(l.type!=='rest'&&dayKey(l.ts)===td)dn[l.cat]=(dn[l.cat]||0)+1});
+ const cnt=id=>S.logs.filter(l=>l.task===id).length;
+ return`<h1>Задания</h1>${dailyCard()}${cl('tasks_'+tod())}
+ <button class="sos" onclick="openSos()">🆘 Не могу начать</button>
+ ${S.cats.map(c=>{const ts=S.tasks.filter(t=>t.cat===c.id),ci=crOf(c.id),col=S.collapsed[c.id];
+  return`<div class="card cat ${dn[c.id]?'dn':''}"><button class="catH" onclick="toggleCat('${c.id}')" aria-expanded="${!col}"><h2>${esc(c.icon)} ${esc(c.name)}</h2>${ci>=0?`<span class="dot" style="background:${CRY[ci].c}" title="${CRY[ci].n}"></span>`:''}<span class="hint">${dn[c.id]?'✓ сегодня '+dn[c.id]+' · ':''}${ts.length}</span><span class="ar">${col?'▸':'▾'}</span></button>
+  ${col?'':ts.map(t=>{const L=LV[t.lvl]||LV[2];return`<div class="task"><span class="ti">${esc(t.icon||L.e)}</span><span class="n">${esc(t.name)}<br><span class="c ${L.c}">${L.n} · +${L.xp} XP${cnt(t.id)?' · ✓ '+cnt(t.id):''}</span></span><button class="sb" title="Начать" aria-label="Начать: ${esc(t.name)}" onclick="begin('${t.id}')">▶</button><button class="sb" title="Записать постфактум" aria-label="Записать постфактум: ${esc(t.name)}" onclick="openQuick('${t.id}')">✓</button></div>`}).join('')||'<p class="hint">Пока нет дел. Добавь в «Ещё».</p>'}</div>`}).join('')}
+ <p class="hint">▶ — начать дело с таймером. ✓ — дело уже сделано, записать постфактум. Нажми на название категории, чтобы развернуть или свернуть её. Зелёная рамка — в категории сегодня что-то сделано. Цветная точка — категория привязана к кристаллу. Менять дела и категории можно в «Ещё».</p>`}
+
+const sc=(id,t,h)=>`<label for="${id}">${t}</label><p class="hint">${h}</p>${slider(id,1,1,10)}`;
+const SC_MOOD='1 — очень плохое, 10 — отличное',SC_EN='1 — совсем нет сил, 10 — полно сил',SC_FAT='1 — совсем не устала, 10 — очень устала';
+function renderMission(){
+ const m=document.getElementById('mission'),A=S.active;m.hidden=!A;if(!A)return;
+ const cancel=A.kind==='lvl'?`<button class="ghost" style="width:100%;margin-top:8px" onclick="cancelLvl()">Отмена</button>`:`<button class="ghost" style="width:100%;margin-top:8px" onclick="cancelAct()">${A.kind==='moment'?'Закрыть без записи':'Отмена'}</button>`;
+ let h='';const bad=()=>{S.active=null;m.hidden=true};
+ if(A.kind==='newtask')h=`<h1>Новое дело</h1><div class="card"><label for="tn">Название</label><input type="text" id="tn" maxlength="60"><label for="tc">Категория</label><select id="tc">${catOpts(A.cat)}</select><label>Сложность — насколько тяжело именно тебе</label>${lvPicker(2)}<label for="tf">С чего начинать ${OPT}</label><input type="text" id="tf" maxlength="120" placeholder="самое первое маленькое действие"><label>Значок ${OPT}</label>${emoPicker('ei','')}<button class="pri" onclick="saveTask()">Добавить</button></div>`;
+ else if(A.kind==='newcat')h=`<h1>Новая категория</h1><div class="card"><label for="cn">Название</label><input type="text" id="cn" maxlength="40"><label>Значок ${OPT}</label>${emoPicker('ci','📌')}<p class="hint">К кристаллу категорию можно привязать на главной или в «Ещё».</p><h2 style="margin-top:18px">Первое дело в ней ${OPT}</h2><label for="tn">Название дела</label><input type="text" id="tn" maxlength="60"><label>Сложность</label>${lvPicker(2)}<button class="pri" onclick="saveCat()">Создать</button></div>`;
+ else if(A.kind==='lvl'){const t=task(A.task);if(!t)return bad();h=`<h1>Дело</h1><div class="card"><label for="tnm">Название</label><input type="text" id="tnm" maxlength="60" value="${esc(t.name)}"><p class="hint">Новое название появится и в прошлых записях журнала.</p><label>Сложность</label>${lvPicker(t.lvl)}<p class="hint">Изменение сложности действует на новые записи. Прошлые остаются как были.</p><label for="tf">С чего начинать ${OPT}</label><input type="text" id="tf" maxlength="120" value="${esc(t.first||'')}"><button class="pri" onclick="saveLvl()">Сохранить</button></div>`}
+ else if(A.kind==='quick'){const t=task(A.task);if(!t)return bad();h=`<p class="mono">ЗАПИСЬ ПОСТФАКТУМ</p><h1>${esc(t.name)}</h1><div class="card"><label for="mn">Сколько минут заняло дело?</label><input type="number" id="mn" min="1" max="600" inputmode="numeric" placeholder="минуты">
+  ${sc('m0','Оцени настроение перед делом',SC_MOOD)}${sc('e0','Оцени свою степень энергии перед делом',SC_EN)}
+  ${sc('a','Оцени настроение после дела',SC_MOOD)}${sc('fa1','Оцени степень усталости после дела',SC_FAT)}
+  <label class="chk"><input type="checkbox" id="pt"> Сделано частично</label>
+  <label>Что мешало? ${OPT}</label>${hindUI('qh',[])}
+  <label for="nt">Заметка ${OPT}</label><p class="hint">Сюда можно вписать то, что помогало или мешало, или что-то ещё.</p><textarea id="nt"></textarea><button class="pri" onclick="saveQuick()">Записать</button></div>`}
+ else if(A.kind==='timefix'){const l=S.logs.find(x=>x.id===A.log);if(!l)return bad();h=`<p class="mono">НЕВЕРНО ВНЕСЁННОЕ ВРЕМЯ</p><h1>${esc(l.tname)}</h1><div class="card"><p>${fmt(l.ts)} · записано <b>${l.min}</b> мин${l.minOrig&&l.minOrig!==l.min?` (изначально ${l.minOrig})`:''}</p><label for="fm">Сколько минут ты реально потратила?</label><input type="number" id="fm" min="1" max="600" inputmode="numeric" value="${Math.min(l.min,60)}"><p class="hint">Исходное значение запомнится, а запись пометится как исправленная. Опыт за дело не изменится.</p><button class="pri" onclick="saveFix()">Сохранить</button></div>`}
+ else if(A.kind==='moment'){h=momentView()}
+ else if(A.kind==='sos'){
+  if(A.step==='pick')h=`<h1>Не могу начать</h1>${qt(lineFrom('sos'))}<div class="card"><label for="st">С какого дела начнём?</label><select id="st">${S.cats.map(c=>`<optgroup label="${esc(c.icon+' '+c.name)}">${S.tasks.filter(t=>t.cat===c.id).map(t=>`<option value="${t.id}">${esc(t.name)}</option>`).join('')}</optgroup>`).join('')}</select>
+   <label for="sm">Самое маленькое действие ${OPT}</label><input type="text" id="sm" maxlength="120" placeholder="например: просто взять в руки"><p class="hint">Не решай, будешь ли делать всё. Две минуты — только подготовка.</p><button class="pri" onclick="sosGo()">▶ Две минуты на подготовку</button></div>`;
+  else{if(!A.q)A.q=qt(lineFrom('sos_prep'));h=`<h1>Готовься к началу</h1><div class="timer" id="tm">02:00</div>${A.q}${A.first?`<div class="first">Шаг: ${esc(A.first)}</div>`:''}<p class="hint">Дело: ${esc((task(A.task)||{name:''}).name)}. Когда отсчёт дойдёт до нуля, дело начнётся само и таймер пойдёт вверх.</p><button class="pri" onclick="sosYes()">Начать сразу</button><button class="ghost" style="width:100%;margin-top:8px" onclick="sosNo()">Не вышло</button>`}
+ }
+ else if(A.kind==='task'){
+  const t=task(A.task);if(!t)return bad();const L=LV[t.lvl]||LV[2];
+  const head=`<p class="mono">ЗАДАНИЕ · ${L.e} ${L.n.toUpperCase()}</p><h1>${esc(t.icon||'')} ${esc(t.name)}</h1>`;
+  if(A.step==='go'){if(!A.q)A.q=qt(startLine(t));h=head+`${A.q}<div class="card neon"><h2>Первый шаг — прямо сейчас</h2><label for="fs">Одно маленькое действие, с которого начнёшь ${OPT}</label>
+   <input type="text" id="fs" class="first" maxlength="120" placeholder="например: ${esc(t.first||'сделать первое движение')}"><p class="hint">Не решай, будешь ли делать всё дело. Сделай только этот шаг.</p>
+   <label for="lec">Что на фоне: трек, лекция ${OPT}</label><input type="text" id="lec" maxlength="120">
+   ${sc('m0','Оцени настроение перед делом',SC_MOOD)}${sc('e0','Оцени свою степень энергии перед делом',SC_EN)}
+   <button class="pri" onclick="goRun()">▶ Начинаю</button></div>`}
+  if(A.step==='run'){if(!A.q)A.q=qt(lineFrom('run'));h=head+`<div class="timer" id="tm">00:00</div>${A.q}${A.first?`<div class="first">Шаг 1: ${esc(A.first)}</div>`:''}${A.lecture?`<p class="hint">На фоне: ${esc(A.lecture)}</p>`:''}<button class="pri" onclick="S.active.min=Math.max(1,Math.round((Date.now()-S.active.startTs)/6e4));S.active.step='after';save()">■ Закончила / остановилась</button>`}
+  if(A.step==='after')h=head+`<div class="card">${sc('a','Оцени настроение после дела',SC_MOOD)}${sc('fa1','Оцени степень усталости после дела',SC_FAT)}
+   <label>Дело доведено до конца?</label><label class="chk"><input type="radio" name="dn" value="1" checked> Да, полностью</label><label class="chk"><input type="radio" name="dn" value="0"> Частично / пришлось прерваться</label>
+   <label>Что мешало? ${OPT}</label>${hindUI('ah',[])}
+   <label for="nt">Заметка ${OPT}</label><p class="hint">Сюда можно вписать то, что помогало или мешало, или что-то ещё.</p><textarea id="nt"></textarea>
+   <button class="pri" onclick="finish()">Записать в дневник</button></div>`;
+ }
+ document.getElementById('mbody').innerHTML=h+cancel;
+ if(A.kind==='moment'&&mSteps()[A.i]==='task')momentTasks(A.d.task);
+}
+function goRun(){const A=S.active;A.first=val('fs');A.lecture=val('lec');A.mood0=+val('m0');A.en0=+val('e0');A.startTs=Date.now();A.step='run';A.q=qt(lineFrom('run'));save()}
+function cancelLvl(){const A=S.active,t=task(A.task);if(!t){closeAct();return}
+ const ch=val('tnm')!==t.name||lvVal()!==t.lvl||val('tf')!==(t.first||'');
+ if(!ch){closeAct();return}ask('Отбросить изменения и вернуться?','Отбросить',closeAct,true)}
+function saveTask(){const n=val('tn');if(!n){toast('Напиши название дела');return}const t=mkTask(n,val('tc'),lvVal(),val('ei'));t.first=val('tf');S.active=null;save();toast('Дело добавлено')}
+function saveLvl(){const t=task(S.active.task),v=lvVal(),n=val('tnm').slice(0,60),f=val('tf');if(!t){S.active=null;save();return}
+ if(!n){toast('Название не может быть пустым');return}
+ const msgs=[];
+ if(n!==t.name){t.name=n;S.logs.forEach(l=>{if(l.task===t.id)l.tname=n});msgs.push('название')}
+ if(v!==t.lvl){S.lvlHist.push({ts:Date.now(),task:t.id,tname:t.name,from:t.lvl,to:v});t.lvl=v;msgs.push('сложность')}
+ if(f!==(t.first||'')){t.first=f;msgs.push('первый шаг')}
+ S.active=null;save();toast(msgs.length?'Обновлено: '+msgs.join(', '):'Без изменений')}
+function mkLog(t,o){const c=cat(t.cat)||{name:'—'};return Object.assign({id:Date.now()+Math.floor(Math.random()*999),ts:Date.now(),type:'task',task:t.id,tname:t.name,cat:t.cat,cname:c.name,lvl:t.lvl,min:0,mood0:null,en0:null,after:null,fat1:null,done:true,intr:[],note:'',lecture:'',first:'',quick:false},o)}
+function startLine(t){const sp=[];if(t.lvl>=3)sp.push('start_hard');else if(t.lvl<=1)sp.push('start_easy');const k=catKey(t.cat);if(k)sp.push('start_'+k);return lineFrom('start',sp)}
+function fullLine(l){const sp=[];if(l.lvl>=3)sp.push('full_hard');else if(l.lvl<=1)sp.push('full_easy');const k=catKey(l.cat);if(k)sp.push('full_'+k);if(l.min&&l.min<=3)sp.push('full_quick');if(l.min>=45)sp.push('full_long');return lineFrom('full',sp)}
+function pushLog(l){
+ const rb=rank(total()),cb=crInfo(),back=sinceLast()>=3&&!days().has(dayKey(Date.now()));
+ const restToday_=S.logs.some(z=>z.type==='rest'&&dayKey(z.ts)===dayKey(l.ts));
+ l.cr=crOf(l.cat);S.logs.push(l);S.active=null;tab='dossier';XPM=xpMap();
+ const ca=crInfo();let cel='';
+ if(l.done&&l.cr>=0){const i=l.cr;cel=celeb(i,cb[i].today===0,ca[i].today);try{navigator.vibrate&&navigator.vibrate(cb[i].today===0?[60,40,120]:[40])}catch(e){}}
+ const un=unlockNotes(),ra=rank(total());const a=save({hold:true});
+ const x=xpOf(l),why=WHY[l.id]||'',td=S.logs.filter(z=>dayKey(z.ts)===dayKey(l.ts)).length;
+ let h=`<h2>Записано</h2>${cel}<div class="bigxp">+${x} XP</div>${why?`<p class="hint">${esc(why)}</p>`:''}${qt(l.done?fullLine(l):lineFrom('part'))}`;
+ if(back)h+=qt(lineFrom('ad_back_do'));else if(restToday_)h+=qt(lineFrom('ad_rest_do'));
+ if(why.includes('лимит'))h+=qt(lineFrom('cap'));
+ if(td===1&&streak()>=3)h+=qt(lineFrom('streak'));
+ if(ra!==rb)h+=`<h3>⭐ Новое звание: ${esc(ra)}</h3>${qt(lineFrom('rankup'))}`;
+ if(l.min>=LONG_MIN)h+=`<div class="warn">${qt(lineFrom('time_fix'))}<p class="hint">Исправить: «Ещё» → «Неверно внесённое время».</p></div>`;
+ h+=un+achBlock(a)+`<button class="pri" onclick="closeModal()">Ок</button>`;modal(h)}
+function finish(){const A=S.active,t=task(A.task);
+ pushLog(mkLog(t,{ts:A.startTs||Date.now(),min:A.min||0,mood0:A.mood0??null,en0:A.en0??null,after:+val('a'),fat1:+val('fa1'),done:document.querySelector('[name=dn]:checked').value==='1',intr:hindChecked('ah'),note:val('nt'),lecture:A.lecture||'',first:A.first||''}))}
+function saveQuick(){const t=task(S.active.task),mn=+val('mn');if(!(mn>=1)){toast('Укажи, сколько минут заняло дело');return}
+ pushLog(mkLog(t,{ts:Date.now()-mn*6e4,mood0:+val('m0'),en0:+val('e0'),after:+val('a'),fat1:+val('fa1'),min:mn,done:!document.getElementById('pt').checked,intr:hindChecked('qh'),note:val('nt'),quick:true}))}
+function openFix(id){S.active={kind:'timefix',log:id};save()}
+function saveFix(){const A=S.active,l=S.logs.find(x=>x.id===A.log),v=+val('fm');if(!l||!(v>=1)){toast('Укажи минуты');return}
+ if(l.minOrig==null)l.minOrig=l.min;l.min=v;l.fixed=true;S.active=null;const a=save({hold:true});toast('Время исправлено: '+v+' мин');if(a.length)showAch(a)}
+function restDay(){if(S.logs.some(l=>l.type==='rest'&&dayKey(l.ts)===dayKey(Date.now()))){toast('Режим восстановления на сегодня уже отмечен.');return}
+ S.logs.push({id:Date.now(),ts:Date.now(),type:'rest',task:'',tname:'Режим восстановления',cat:'',cname:'',lvl:0,min:0,after:null,done:true,intr:[],note:'',lecture:'',first:'',quick:true});
+ XPM=xpMap();const m=sy(lineFrom('rest')),u=unlockNotes(),a=save({hold:true});
+ if(u||a.length)modal(`<h2>Плохой день</h2><p>${esc(m)}</p>${u}${achBlock(a)}<button class="pri" onclick="closeModal()">Ок</button>`);else toast(m)}
+function startExp(){S.start={date:dayKey(Date.now()),ease:+val('ez'),note:val('eznote')};S.quest={start:S.start.date};tab='tasks';save();toast('Фея Муза: Сезон начался. Вперёд!')}
+function sosGo(){const A=S.active;if(!document.getElementById('st').value){toast('Сначала добавь хотя бы одно дело');return}A.task=val('st');A.first=val('sm');A.sosTs=Date.now();A.step='run';A.q='';save()}
+function sosAuto(){const A=S.active;if(!A||A.kind!=='sos'||A.step!=='run')return;
+ S.sos.push({ts:A.sosTs,task:A.task,started:true,auto:true});
+ S.active={kind:'task',task:A.task,step:'run',first:A.first,lecture:'',startTs:A.sosTs+12e4,sos:true,q:qt(lineFrom('sos_go'))};
+ save();try{navigator.vibrate&&navigator.vibrate([200,100,200])}catch(e){}toast('Дело начато! Таймер идёт.',5000)}
+setInterval(()=>{const A=S.active;if(A&&A.kind==='sos'&&A.step==='run'&&A.sosTs&&Date.now()-A.sosTs>=12e4)sosAuto()},500);
+document.addEventListener('visibilitychange',()=>{const A=S.active;if(!document.hidden&&A&&A.kind==='sos'&&A.step==='run'&&A.sosTs&&Date.now()-A.sosTs>=12e4)sosAuto()});
+function saveEnd(){const miss=[];
+ if(document.getElementById('fe').dataset.t!=='1')miss.push('оценка лёгкости дел');
+ if(document.getElementById('fn').dataset.t!=='1')miss.push('настроение');
+ [['f1','мысли об эксперименте'],['f4','что помогало и мешало']].forEach(p=>{if(!val(p[0]))miss.push(p[1])});
+ if(miss.length){toast('Заполни обязательные поля: '+miss.join(', '),9000);return}
+ S.end={date:dayKey(Date.now()),ease:+val('fe'),now:+val('fn'),thoughts:val('f1'),note:val('f4'),extra:val('f5')};save();toast('Итоговая запись сохранена.')}
+function statsCard(s){const R=real(),a=k=>{const v=avgOf(R,k);return v==null?'—':v.toFixed(1)};return`<div class="card"><div class="stats"><div><b>${s.n}</b>дел записано</div><div><b>${s.days}</b>дней с записями</div><div><b>${s.full}%</b>доведено до конца</div><div><b>${s.min}</b>минут всего</div><div><b>${a('mood0')}</b>настроение до дела</div><div><b>${a('en0')}</b>энергия до дела</div><div><b>${a('after')}</b>настроение после</div><div><b>${a('fat1')}</b>усталость после</div></div></div>`}
+function logLine(l){const t=new Date(l.ts).toLocaleTimeString('ru',{hour:'2-digit',minute:'2-digit'});if(l.type==='rest')return t+' — режим восстановления (плохой день).';
+ return`${t} — ${l.cname} · ${l.tname} (${LV[l.lvl].n}), ${l.min||0} мин.${l.mood0!=null?' Настроение до: '+l.mood0+'/10.':''}${l.en0!=null?' Энергия до: '+l.en0+'/10.':''}${l.after!=null?' Настроение после: '+l.after+'/10.':''}${l.fat1!=null?' Усталость после: '+l.fat1+'/10.':''}${l.done?'':' Частично.'}${l.quick?' Запись постфактум.':''}${l.intr&&l.intr.length?' Помехи: '+l.intr.join('; ')+'.':''}${l.note?' Заметка: '+l.note:''}`}
+function csv(){const H=['дата','время','день_сезона','неделя_сезона','тип','категория','дело','сложность','минуты','настроение_до','энергия_до','настроение_после','усталость_после','выполнено','помехи','первый_шаг','фон','заметка','запись_постфактум','xp'];
+ const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';const tm=l=>new Date(l.ts).toLocaleTimeString('ru',{hour:'2-digit',minute:'2-digit'});
+ const rows=[...S.logs].sort((a,b)=>a.ts-b.ts).map(l=>[dayKey(l.ts),tm(l),dayOf(l.ts),weekOf(l.ts),l.type||'task',l.cname,l.tname,l.lvl?LV[l.lvl].n:'',l.min||0,l.mood0??'',l.en0??'',l.after??'',l.fat1??'',l.done?1:0,(l.intr||[]).join(' | '),l.first,l.lecture,l.note,l.quick?1:0,xpOf(l)].map(q).join(';'));
+ return'\uFEFF'+[H.map(q).join(';'),...rows].join('\r\n')}
+
+function final(){
+ if(!S.start)return`<h1>Финал</h1><div class="card">Сначала начни сезон на главном экране.</div>`;
+ const E=S.end||{},es=endState(),has=!!S.end;
+ const g=(ok,t)=>`<div class="goal ${ok?'ok':''}">${ok?'★':'☆'} ${t}</div>`;
+ let endCard='';if(es.id!==null){const e=ENDS[es.id],s=stats(),cd=catsDone();
+  const lines=e[1].map(r=>[r[0],r[1].replace('{cats}',cd)]);
+  endCard=`<div class="card neon"><h2>Концовка: ${e[0]}</h2>${lines.map(qt).join('')}
+  <p class="hint">Итоги сезона: ${s.n} дел, ${s.min} мин, ${s.days} дн. с записями, ${es.cs} направл., достижений: ${ACH.filter(a=>S.ach[a.id]).length} из ${ACH.length}.</p>${es.id===0?'<p class="hint">Прогресс сохранён, сезон можно продолжать.</p>':'<p class="hint">Можно продолжать дальше — записи сохраняются.</p>'}</div>`}
+ return`<h1>Финал сезона</h1><p class="mono">ДЕНЬ ${Math.max(1,es.n)} ИЗ ${QDAYS}</p>${qt(lineFrom('final'))}
+ <div class="card"><h2>Условия концовок</h2>${g(es.x>=GOAL,`Опыт: ${es.x} / ${GOAL} — «Сезон закрыт»`)}${g(es.cs>=NEED_CATS,`Направления: ${es.cs} / ${NEED_CATS} — «Доступ расширен»`)}${g(es.d>=NEED_DAYS,`Дни с записями: ${es.d} / ${NEED_DAYS} — «Свой сезон»`)}<p class="hint">Плохой концовки нет. Если порог за ${QDAYS} дней не набран, сезон просто продлевается.</p></div>${endCard}
+ <div class="card"><h2>Итоговая запись</h2><p class="hint">Все поля обязательны, кроме заметок в конце.</p>
+ <label for="fe">Насколько просто тебе теперь справляться со скучными делами?</label><p class="hint">1 — совсем никак, 10 — легко. На старте было: <b>${S.start.ease}</b></p>${slider('fe',E.ease??1,1,10,!has)}
+ <label for="fn">Как ты себя чувствуешь сейчас?</label><p class="hint">1 — очень плохо, 10 — отлично</p>${slider('fn',E.now??1,1,10,!has)}
+ <label for="f1">Что ты думаешь об этом эксперименте? Как менялось то, как ты откладываешь дела?</label><textarea id="f1">${esc(E.thoughts)}</textarea>
+ <label for="f4">Что помогало больше всего? Что мешало?</label><textarea id="f4">${esc(E.note)}</textarea>
+ <label for="f5">Заметки ${OPT}</label><p class="hint">Сюда можно вписать всё, что не вошло в вопросы выше.</p><textarea id="f5">${esc(E.extra)}</textarea>
+ <button class="pri" onclick="saveEnd()">${has?'Обновить запись':'Сохранить итоговую запись'}</button></div>
+ ${has?`<div class="card neon"><h2>Итог</h2><p>Лёгкость скучных дел: <b>${S.start.ease} → ${S.end.ease}</b> (${S.end.ease-S.start.ease>=0?'+':''}${S.end.ease-S.start.ease})</p><p>Настроение в финале: <b>${S.end.now??'—'}</b>/10</p></div>`:''}`}
+let DR=null;
+function dragInit(){document.querySelectorAll('[data-drag]').forEach(h=>{h.onpointerdown=e=>{const item=h.closest('[data-item]');if(!item)return;e.preventDefault();try{h.setPointerCapture(e.pointerId)}catch(_){}
+  DR={item,list:item.parentElement,type:h.dataset.drag,y0:e.clientY,over:null};item.classList.add('dragging');
+  h.onpointermove=ev=>{if(!DR)return;item.style.transform=`translateY(${ev.clientY-DR.y0}px)`;let tgt=null;const sib=[...DR.list.children].filter(x=>x!==item&&x.hasAttribute('data-item'));
+   for(const s of sib){const r=s.getBoundingClientRect();if(ev.clientY<r.top+r.height/2){tgt=s;break}}
+   sib.forEach(s=>s.classList.remove('dropb'));if(tgt)tgt.classList.add('dropb');DR.over=tgt;
+   if(ev.clientY<90)scrollBy(0,-10);else if(ev.clientY>innerHeight-110)scrollBy(0,10)};
+  h.onpointerup=h.onpointercancel=()=>{if(!DR)return;const d=DR;DR=null;h.onpointermove=h.onpointerup=h.onpointercancel=null;d.item.style.transform='';d.item.classList.remove('dragging');
+   const ids=[...d.list.children].filter(x=>x.hasAttribute('data-item')&&x!==d.item).map(x=>x.dataset.id);const at=d.over?ids.indexOf(d.over.dataset.id):ids.length;ids.splice(at,0,d.item.dataset.id);applyOrder(d.type,ids,d.list.dataset.cat)}}})}
+function applyOrder(type,ids,catId){
+ if(type==='cat')S.cats=ids.map(id=>S.cats.find(c=>c.id===id)).filter(Boolean);
+ else{const idx=[],items=[];S.tasks.forEach((t,i)=>{if(t.cat===catId){idx.push(i);items.push(t)}});const ord=ids.map(id=>items.find(t=>t.id===id)).filter(Boolean);idx.forEach((p,k)=>S.tasks[p]=ord[k])}
+ save()}
+function moveItem(type,id,dir,catId){const arr=type==='cat'?S.cats.map(c=>c.id):S.tasks.filter(t=>t.cat===catId).map(t=>t.id);const i=arr.indexOf(id),j=i+dir;if(j<0||j>=arr.length)return;[arr[i],arr[j]]=[arr[j],arr[i]];applyOrder(type,arr,catId)}
+function crSel(id){const ci=crOf(id);return`<select aria-label="Кристалл категории" style="flex:2" onchange="setCatCrySel('${id}',this.value)"><option value="-1">— без кристалла —</option>${CRY.map((c,i)=>`<option value="${i}" ${ci===i?'selected':''}>${i+1}. ${c.n}</option>`).join('')}</select>`}
+function setCatCrySel(id,v){v=+v;S.cr=S.cr.map(c=>c===id?'':c);if(v>=0)S.cr[v]=id;save()}
+function more(){
+ const cs=S.cats.map(c=>{const ts=S.tasks.filter(t=>t.cat===c.id);return`<div class="card" data-item data-id="${c.id}"><div class="row" style="flex-wrap:nowrap"><span class="dh" data-drag="cat" title="Перетащить категорию" aria-label="Перетащить категорию">⋮⋮</span><h2 style="flex:3;margin:0">${esc(c.icon)} ${esc(c.name)}</h2><button class="x" onclick="moveItem('cat','${c.id}',-1)" aria-label="Выше">↑</button><button class="x" onclick="moveItem('cat','${c.id}',1)" aria-label="Ниже">↓</button><button class="x" onclick="renameCat('${c.id}')" aria-label="Переименовать категорию">✎</button><button class="x" onclick="delCat('${c.id}')" aria-label="Удалить категорию">🗑</button></div>
+ <div class="row" style="margin:6px 0">${crSel(c.id)}</div>
+ <div data-cat="${c.id}">${ts.map(t=>`<div class="rowl" data-item data-id="${t.id}"><span class="dh" data-drag="task" title="Перетащить дело" aria-label="Перетащить дело">⋮⋮</span><span style="flex:1">${esc(t.icon||LV[t.lvl].e)} ${esc(t.name)} <span class="hint">${LV[t.lvl].n}</span></span><span style="white-space:nowrap"><button class="x" onclick="moveItem('task','${t.id}',-1,'${c.id}')" aria-label="Выше">↑</button><button class="x" onclick="moveItem('task','${t.id}',1,'${c.id}')" aria-label="Ниже">↓</button><button class="x" onclick="openLvl('${t.id}')" aria-label="Изменить дело">⇅</button><button class="x" onclick="delTask('${t.id}')" aria-label="Удалить дело">🗑</button></span></div>`).join('')||'<p class="hint">Пока нет дел</p>'}</div></div>`}).join('');
+ const hd=S.hind.map((h,i)=>`<div class="rowl"><span>${esc(h)}</span><span><button class="x" onclick="renameHind(${i})" aria-label="Изменить">✎</button><button class="x" onclick="delHind(${i})" aria-label="Удалить">🗑</button></span></div>`).join('')||'<p class="hint">Список пуст.</p>';
+ const lg=S.logs.filter(l=>l.type!=='rest').sort((a,b)=>b.min-a.min).slice(0,10);
+ const tf=`<div class="card"><p class="hint">Если забыла нажать «Стоп» и таймер набежал лишнего, поправь реальное время. Показаны самые длинные записи; ⚠️ — длиннее ${LONG_MIN/60} часов.</p>${lg.map(l=>`<div class="rowl"><span>${l.min>=LONG_MIN&&!l.fixed?'⚠️ ':''}${esc(l.tname)}<br><span class="hint">${fmt(l.ts)} · <b>${l.min}</b> мин${l.fixed?' · исправлено (было '+l.minOrig+')':''}</span></span><button onclick="openFix(${l.id})">Исправить</button></div>`).join('')||'<p class="hint">Записей пока нет.</p>'}</div>`;
+ const cln=S.lines.map((x,i)=>`<div class="rowl"><span><b>${who(x.who)}</b> · <span class="hint">${esc(CTXN[x.ctx]||x.ctx)}</span><br>${esc(x.text)}</span><button class="x" onclick="delLine(${i})" aria-label="Удалить реплику">🗑</button></div>`).join('')||'<p class="hint">Своих реплик пока нет.</p>';
+ const KN={log:'Запись о деле',task:'Дело',cat:'Категория',diary:'Запись дневника'};
+ const tr=[...S.trash].sort((a,b)=>b.ts-a.ts).map(t=>{const d=t.data;const nm=t.kind==='log'?(d.tname||'—')+' · '+fmt(d.ts):t.kind==='task'?d.name:t.kind==='cat'?d.cat.name+' ('+d.tasks.length+' дел)':d.text.slice(0,40);return`<div class="rowl"><span><span class="hint">${KN[t.kind]}</span><br>${esc(nm)}</span><span><button onclick="restore('${t.id}')">Вернуть</button><button class="x" onclick="purge('${t.id}')" aria-label="Удалить навсегда">✕</button></span></div>`}).join('')||'<p class="hint">Корзина пуста.</p>';
+ const sr=`<div class="card"><label for="sr">Вопрос про сон обновляется каждый день в</label><select id="sr" onchange="S.sleepReset=+this.value;save()">${[...Array(13).keys()].map(h=>`<option value="${h}" ${sleepResetH()===h?'selected':''}>${String(h).padStart(2,'0')}:00</option>`).join('')}</select><p class="hint">По умолчанию 05:00. До этого часа вопрос про сон ещё относится к прошлому дню. Вопрос про питание всегда за вчера.</p></div>`;
+ return`<h1>Ещё</h1>
+ <h2>Категории и дела</h2><p class="hint">Перетаскивай за ⋮⋮ (или нажимай ↑ ↓), чтобы менять порядок: сверху самое приоритетное. ⇅ — название, сложность, первый шаг. Выпадающий список — привязка категории к кристаллу.</p>${cs}<div class="row"><button onclick="openNewCat()">+ Категория</button><button onclick="openNewTask('${S.cats[0]?S.cats[0].id:''}')">+ Дело</button></div>
+ <h2 style="margin-top:22px">Что мешает делам</h2><div class="card">${hd}<label for="nh">Добавить свой вариант</label><input type="text" id="nh" maxlength="80"><button class="pri" onclick="addHind()">Добавить</button></div>
+ <h2 style="margin-top:22px">Неверно внесённое время</h2>${tf}
+ <h2 style="margin-top:22px">Настройки</h2>${sr}
+ <h2 style="margin-top:22px">Реплики</h2><div class="card"><h3>Добавить свою реплику</h3><label for="lc">Когда звучит</label><select id="lc">${Object.keys(CTXN).map(k=>`<option value="${k}">${CTXN[k]}</option>`).join('')}</select><label for="lw">Кто говорит</label><select id="lw"><option value="m">Фея Муза</option><option value="t">Фея Текна</option></select><label for="lt">Текст</label><input type="text" id="lt" maxlength="200"><button class="pri" onclick="addLine()">Добавить</button><h3 style="margin-top:16px">Твои реплики</h3>${cln}</div>
+ <h2 style="margin-top:22px">Корзина</h2><div class="card">${tr}</div>
+ <h2 style="margin-top:22px">Данные</h2><div class="card"><p class="hint">Данные хранятся только на этом устройстве, в этом приложении. Скачай копию, особенно перед сменой телефона, очисткой данных сайтов или удалением значка.${S.lastBackup?' Последняя копия: '+fmt(S.lastBackup)+'.':''}</p>
+ <div class="row"><button onclick="exp('json')">⬇ Копия (JSON)</button><button onclick="exp('csv')">⬇ Таблица (CSV)</button><button onclick="exp('txt')">⬇ Отчёт (TXT)</button></div>
+ <p class="hint">Если файл не скачался, откроется окно с текстом: его можно скопировать и сохранить в заметки или отправить сообщением.</p>
+ <label for="imp">Загрузить копию (JSON)</label><input type="file" id="imp" accept=".json,application/json" onchange="imp(this)">
+ <label for="impt">Или вставь текст копии</label><textarea id="impt" placeholder="Вставь сюда содержимое JSON-копии"></textarea><button style="width:100%;margin-top:8px" onclick="impText()">Загрузить из текста</button>
+ <button class="danger" style="width:100%;margin-top:16px" onclick="resetAll()">Стереть все данные</button></div>`}
+function journal(){
+ const tabs=[['sum','Сводка'],['logs','Дела'],['hist','История'],['dyn','Направления'],['diary','Дневник']];
+ const sw=`<div class="row" style="margin-bottom:12px;flex-wrap:nowrap;overflow-x:auto">${tabs.map(t=>`<button style="flex:none" class="${jtab===t[0]?'sel':''}" onclick="jtab='${t[0]}';render()">${t[1]}</button>`).join('')}</div>`;
+ return`<h1>Журнал</h1>${sw}${({sum:summary,logs:logsView,hist:history,dyn:dynamics,diary})[jtab]()}`}
+function report(){const r=[reportBase()],ds=Object.keys(S.daily).sort();
+ if(ds.length)r.push('','УТРЕННЯЯ ОТМЕТКА (сон / питание, 1–10):',...ds.map(k=>{const e=S.daily[k];return`• ${ruDate(k)} — сон: ${e.nosleep?'не спала':(e.sleep??'—')}, питание: ${e.food??'—'}`}));
+ if(S.moments.length)r.push('','МОМЕНТЫ ПРОКРАСТИНАЦИИ:',...S.moments.map(x=>`• ${fmt(x.ts)}${x.late?' (задним числом: '+x.when+')':''} — [${x.cname}] ${x.tname}. Помехи: ${(x.hind||[]).join('; ')||'—'}. Занималась: ${x.doing||'—'}. Чувство: ${x.emoName}${x.int?' ('+x.int+'/5)':''}.`));
+ if(S.dirs.length)r.push('','ЧАРЫ РЕШИМОСТИ (директивы):',...S.dirs.map(d=>`• ${fmt(d.ts)} — когда ${d.ifT}, я ${d.thenT}. ${d.status==='cancelled'?'Отменены (ошибка).':d.status==='stopped'?'Завершены досрочно.':d.status==='done'?'Итог: '+RES[d.result]+'.':'Действуют.'}`));
+ const fx_=S.logs.filter(l=>l.fixed);if(fx_.length)r.push('','ИСПРАВЛЕННОЕ ВРЕМЯ:',...fx_.map(l=>`• ${fmt(l.ts)} ${l.tname}: ${l.minOrig} → ${l.min} мин`));
+ const ins=insights();if(ins.length)r.push('','НАБЛЮДЕНИЯ ПРИЛОЖЕНИЯ (по правилам, не диагноз):',...ins.map(t=>'• '+t));
+ return r.join('\n')}
+function render(){XPM=xpMap();document.querySelectorAll('nav button').forEach(b=>b.setAttribute('aria-current',b.dataset.tab===tab));
+ const w=storageOk?'':'<div class="warn">⚠️ Этот браузер не сохраняет данные. Открой приложение с главного экрана телефона (значок), а не из вкладки.</div>';
+ document.getElementById('app').innerHTML=w+({dossier,tasks,journal,final,more})[tab]();renderMission();if(tab==='more')dragInit()}
+
+function achBlock(list){return list.length?`<h3>🏆 ${list.length>1?'Достижения':'Достижение'}</h3>${list.map(a=>`<p><b>${a.ic||''} ${esc(a.n)}</b> · +${a.xp} XP<br><span class="hint">${esc(a.d)}</span></p>`).join('')}`:''}
+function showAch(list){modal(`<h2>Новое достижение</h2>${achBlock(list)}${qt(lineFrom('ach'))}<button class="pri" onclick="closeModal()">Ок</button>`)}
+
+if('serviceWorker' in navigator&&location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+
+document.getElementById('toast').onclick=()=>document.getElementById('toast').classList.remove('on');
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;render();scrollTo(0,0)});
+render();
+</script>
+</body>
+</html>
